@@ -33,17 +33,13 @@ uv run python -m bizintel.dw_create_modification.case
 # === Section 1. Import Dependencies and Constants ==========
 # ==========================================================
 
-
 from pathlib import Path
 from typing import Final
 
+from datafun_toolkit.logger import log_path
 import duckdb
 
-from datafun_toolkit.logger import log_path
-
 from bizintel.utils_logger import LOG, log_header
-
-
 
 # ==========================================================
 # === Declare Constants ====================================
@@ -51,10 +47,7 @@ from bizintel.utils_logger import LOG, log_header
 
 
 # DuckDB stores the entire warehouse in one file.
-DW_FILE: Final[Path] = Path(
-    "artifacts/smart_sales.duckdb"
-)
-
+DW_FILE: Final[Path] = Path("artifacts/smart_sales.duckdb")
 
 
 # ==========================================================
@@ -67,9 +60,7 @@ DW_FILE: Final[Path] = Path(
 # Customer dimension describes WHO made purchases.
 
 
-def create_dim_customers(
-    conn: duckdb.DuckDBPyConnection
-) -> None:
+def create_dim_customers(conn: duckdb.DuckDBPyConnection) -> None:
     """
     Create the customers dimension table.
 
@@ -81,17 +72,13 @@ def create_dim_customers(
         None
     """
 
-    LOG.info(
-        "START create dim_customers"
-    )
-
+    LOG.info("START create dim_customers")
 
     conn.execute(
         """
         DROP TABLE IF EXISTS dim_customers
         """
     )
-
 
     conn.execute(
         """
@@ -109,11 +96,7 @@ def create_dim_customers(
         """
     )
 
-
-    LOG.info(
-        "dim_customers created."
-    )
-
+    LOG.info("dim_customers created.")
 
 
 # ==========================================================
@@ -124,9 +107,7 @@ def create_dim_customers(
 # Product dimension describes WHAT was purchased.
 
 
-def create_dim_products(
-    conn: duckdb.DuckDBPyConnection
-) -> None:
+def create_dim_products(conn: duckdb.DuckDBPyConnection) -> None:
     """
     Create the products dimension table.
 
@@ -138,17 +119,13 @@ def create_dim_products(
         None
     """
 
-    LOG.info(
-        "START create dim_products"
-    )
-
+    LOG.info("START create dim_products")
 
     conn.execute(
         """
         DROP TABLE IF EXISTS dim_products
         """
     )
-
 
     conn.execute(
         """
@@ -166,10 +143,9 @@ def create_dim_products(
         """
     )
 
+    LOG.info("dim_products created.")
 
-    LOG.info(
-        "dim_products created."
-    )
+
 # ==========================================================
 # === Section 2.3 Create Store Dimension ===================
 # ==========================================================
@@ -183,9 +159,7 @@ def create_dim_products(
 #   - state
 
 
-def create_dim_stores(
-    conn: duckdb.DuckDBPyConnection
-) -> None:
+def create_dim_stores(conn: duckdb.DuckDBPyConnection) -> None:
     """
     Create the stores dimension table.
 
@@ -197,15 +171,9 @@ def create_dim_stores(
         None
     """
 
-    LOG.info(
-        "START create dim_stores"
-    )
+    LOG.info("START create dim_stores")
 
-
-    LOG.info(
-        "Drop existing dim_stores table."
-    )
-
+    LOG.info("Drop existing dim_stores table.")
 
     conn.execute(
         """
@@ -213,11 +181,7 @@ def create_dim_stores(
         """
     )
 
-
-    LOG.info(
-        "Create dim_stores table."
-    )
-
+    LOG.info("Create dim_stores table.")
 
     conn.execute(
         """
@@ -235,11 +199,7 @@ def create_dim_stores(
         """
     )
 
-
-    LOG.info(
-        "dim_stores created."
-    )
-
+    LOG.info("dim_stores created.")
 
 
 # ==========================================================
@@ -252,9 +212,7 @@ def create_dim_stores(
 # It stores marketing campaign information.
 
 
-def create_dim_campaigns(
-    conn: duckdb.DuckDBPyConnection
-) -> None:
+def create_dim_campaigns(conn: duckdb.DuckDBPyConnection) -> None:
     """
     Create the campaigns dimension table.
 
@@ -266,15 +224,9 @@ def create_dim_campaigns(
         None
     """
 
-    LOG.info(
-        "START create dim_campaigns"
-    )
+    LOG.info("START create dim_campaigns")
 
-
-    LOG.info(
-        "Drop existing dim_campaigns table."
-    )
-
+    LOG.info("Drop existing dim_campaigns table.")
 
     conn.execute(
         """
@@ -282,11 +234,7 @@ def create_dim_campaigns(
         """
     )
 
-
-    LOG.info(
-        "Create dim_campaigns table."
-    )
-
+    LOG.info("Create dim_campaigns table.")
 
     conn.execute(
         """
@@ -306,11 +254,7 @@ def create_dim_campaigns(
         """
     )
 
-
-    LOG.info(
-        "dim_campaigns created."
-    )
-
+    LOG.info("dim_campaigns created.")
 
 
 # ==========================================================
@@ -330,9 +274,7 @@ def create_dim_campaigns(
 # CampaignID  -> dim_campaigns
 
 
-def create_fact_sales(
-    conn: duckdb.DuckDBPyConnection
-) -> None:
+def create_fact_sales(conn: duckdb.DuckDBPyConnection) -> None:
     """
     Create the sales fact table.
 
@@ -344,15 +286,9 @@ def create_fact_sales(
         None
     """
 
-    LOG.info(
-        "START create fact_sales"
-    )
+    LOG.info("START create fact_sales")
 
-
-    LOG.info(
-        "Drop existing fact_sales table."
-    )
-
+    LOG.info("Drop existing fact_sales table.")
 
     conn.execute(
         """
@@ -360,11 +296,7 @@ def create_fact_sales(
         """
     )
 
-
-    LOG.info(
-        "Create fact_sales table."
-    )
-
+    LOG.info("Create fact_sales table.")
 
     conn.execute(
         """
@@ -392,78 +324,39 @@ def create_fact_sales(
         """
     )
 
+    LOG.info("fact_sales created.")
 
-    LOG.info(
-        "fact_sales created."
-    )
+
 # ==========================================================
 # === Section 4. Delete Existing Tables ====================
 # ==========================================================
 
 
-def delete_tables(
-    conn: duckdb.DuckDBPyConnection
-) -> None:
-    """
-    Delete existing warehouse tables.
+def delete_tables(conn):
 
-    Tables are dropped in reverse dependency order.
+    LOG.info("START delete tables....")
 
-    Args:
-        conn:
-            Open DuckDB connection.
+    LOG.info("- Dropping fact_sales table if it exists")
 
-    Returns:
-        None
-    """
+    conn.execute("DROP TABLE IF EXISTS fact_sales")
 
-    LOG.info(
-        "START delete tables"
-    )
+    LOG.info("- Dropping dim_campaigns table if it exists")
 
+    conn.execute("DROP TABLE IF EXISTS dim_campaigns")
 
-    # Fact table must be dropped first
-    # because it references dimensions.
+    LOG.info("- Dropping dim_stores table if it exists")
 
-    conn.execute(
-        """
-        DROP TABLE IF EXISTS fact_sales
-        """
-    )
+    conn.execute("DROP TABLE IF EXISTS dim_stores")
 
+    LOG.info("- Dropping dim_products table if it exists")
 
-    conn.execute(
-        """
-        DROP TABLE IF EXISTS dim_campaigns
-        """
-    )
+    conn.execute("DROP TABLE IF EXISTS dim_products")
 
+    LOG.info("- Dropping dim_customers table if it exists")
 
-    conn.execute(
-        """
-        DROP TABLE IF EXISTS dim_stores
-        """
-    )
+    conn.execute("DROP TABLE IF EXISTS dim_customers")
 
-
-    conn.execute(
-        """
-        DROP TABLE IF EXISTS dim_products
-        """
-    )
-
-
-    conn.execute(
-        """
-        DROP TABLE IF EXISTS dim_customers
-        """
-    )
-
-
-    LOG.info(
-        "All warehouse tables deleted."
-    )
-
+    LOG.info("  All tables deleted.")
 
 
 # ==========================================================
@@ -471,9 +364,7 @@ def delete_tables(
 # ==========================================================
 
 
-def verify_schema(
-    conn: duckdb.DuckDBPyConnection
-) -> None:
+def verify_schema(conn: duckdb.DuckDBPyConnection) -> None:
     """
     Verify tables created in the warehouse.
 
@@ -485,10 +376,7 @@ def verify_schema(
         None
     """
 
-    LOG.info(
-        "START verify schema"
-    )
-
+    LOG.info("START verify schema")
 
     tables = conn.execute(
         """
@@ -496,11 +384,51 @@ def verify_schema(
         """
     ).fetchall()
 
+    LOG.info(f"Tables in warehouse: {[table[0] for table in tables]}")
 
-    LOG.info(
-        f"Tables in warehouse: {[table[0] for table in tables]}"
-    )
 
+# ==========================================================
+# === Section 5.1 Verify Row Counts ========================
+# ==========================================================
+
+
+def verify_row_counts(conn: duckdb.DuckDBPyConnection) -> None:
+    """
+    Verify row counts for all warehouse tables.
+
+    WHY:
+        Confirms that the CREATE DW workflow only creates
+        empty tables and does not load data.
+
+    Args:
+        conn:
+            Open DuckDB connection.
+
+    Returns:
+        None
+    """
+
+    LOG.info("START verify row counts....")
+
+    tables = [
+        "dim_customers",
+        "dim_products",
+        "dim_stores",
+        "dim_campaigns",
+        "fact_sales",
+    ]
+
+    for table in tables:
+        LOG.info(f"Checking row count for {table}")
+
+        count = conn.execute(
+            f"""
+            SELECT COUNT(*)
+            FROM {table}
+            """
+        ).fetchone()[0]
+
+        LOG.info(f"  {table}: {count} rows")
 
 
 # ==========================================================
@@ -510,89 +438,84 @@ def verify_schema(
 
 def main() -> None:
     """
-    Main workflow to create the warehouse schema.
+    Main function to create the data warehouse schema.
     """
 
-    log_header(
-        LOG,
-        "BI"
-    )
+    log_header(LOG, "BI")
 
+    LOG.info("========================")
+    LOG.info("START main()")
+    LOG.info("========================")
 
-    LOG.info(
-        "START dw_create_modification"
-    )
+    log_path(LOG, "Data warehouse:", DW_FILE)
 
+    LOG.info("Create the artifacts/ folder if it does not exist")
 
-    # Create artifacts folder
+    DW_FILE.parent.mkdir(parents=True, exist_ok=True)
 
-    DW_FILE.parent.mkdir(
-        parents=True,
-        exist_ok=True
-    )
+    LOG.info("Connect to DuckDB - creates the file if it does not exist")
 
+    LOG.info("Connecting to DuckDB data warehouse........")
 
-    log_path(
-        LOG,
-        "Data warehouse:",
-        DW_FILE
-    )
+    conn: duckdb.DuckDBPyConnection = duckdb.connect(str(DW_FILE))
 
+    LOG.info("Created conn: a DuckDB connection object")
 
-    LOG.info(
-        "Connect to DuckDB."
-    )
-
-
-    conn: duckdb.DuckDBPyConnection = duckdb.connect(
-        str(DW_FILE)
-    )
-
-
-    # Remove previous schema
+    LOG.info("CALL a function to delete tables in reverse order of creation")
 
     delete_tables(conn)
 
+    LOG.info("CALL a function to create dim_customers........")
 
-
-    # Create dimension tables
+    LOG.info("PASS IN conn: the DuckDB connection object")
 
     create_dim_customers(conn)
 
+    LOG.info("CALL a function to create dim_products........")
+
+    LOG.info("PASS IN conn: the DuckDB connection object")
+
     create_dim_products(conn)
+
+    LOG.info("CALL a function to create dim_stores........")
+
+    LOG.info("PASS IN conn: the DuckDB connection object")
 
     create_dim_stores(conn)
 
+    LOG.info("CALL a function to create dim_campaigns........")
+
+    LOG.info("PASS IN conn: the DuckDB connection object")
+
     create_dim_campaigns(conn)
 
+    LOG.info("CALL a function to create fact_sales........")
 
-
-    # Create fact table
+    LOG.info("PASS IN conn: the DuckDB connection object")
 
     create_fact_sales(conn)
 
+    LOG.info("CALL a function to verify the schema........")
 
-
-    # Verify results
+    LOG.info("PASS IN conn: the DuckDB connection object")
 
     verify_schema(conn)
 
+    LOG.info("CALL a function to verify row counts........")
 
+    LOG.info("PASS IN conn: the DuckDB connection object")
 
-    # Close database connection
+    verify_row_counts(conn)
 
     conn.close()
 
+    LOG.info("Workflow 1-CREATE DW complete")
 
-    LOG.info(
-        "Workflow complete."
-    )
+    LOG.info("========================")
 
+    LOG.info("Executed successfully!")
 
-    LOG.info(
-        "Executed successfully."
-    )
-
+    LOG.info("========================")
 
 
 # ==========================================================
@@ -601,5 +524,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-
     main()
