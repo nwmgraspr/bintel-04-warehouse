@@ -812,3 +812,36 @@
 2026-07-24 01:29:28 | INFO | BI | ========================
 2026-07-24 01:29:28 | INFO | BI | Executed successfully!
 2026-07-24 01:29:28 | INFO | BI | ========================
+2026-07-24 09:43:00 | INFO | BI | === RUN START ===
+2026-07-24 09:43:00 | INFO | BI | project=BI
+2026-07-24 09:43:00 | INFO | BI | repo_dir=bintel-04-warehouse
+2026-07-24 09:43:00 | INFO | BI | python=3.14.6
+2026-07-24 09:43:00 | INFO | BI | os=Windows 10
+2026-07-24 09:43:00 | INFO | BI | shell=powershell
+2026-07-24 09:43:00 | INFO | BI | cwd=.
+2026-07-24 09:43:00 | INFO | BI | github_actions=False
+2026-07-24 09:43:00 | INFO | BI | ========================
+2026-07-24 09:43:00 | INFO | BI | START main()
+2026-07-24 09:43:00 | INFO | BI | ========================
+2026-07-24 09:43:00 | INFO | BI | Data warehouse: = artifacts\university_registration.duckdb
+2026-07-24 09:43:00 | INFO | BI | Connecting to DuckDB...
+2026-07-24 09:43:00 | INFO | BI | Deleting old tables...
+2026-07-24 09:43:00 | INFO | BI | Tables deleted.
+2026-07-24 09:43:00 | INFO | BI | START create students dimension table....
+2026-07-24 09:43:00 | INFO | BI | Dropping existing table if necessary
+2026-07-24 09:43:00 | INFO | BI | Creating dim_students table
+2026-07-24 09:43:00 | INFO | BI | START create courses dimension table....
+2026-07-24 09:43:00 | INFO | BI | Dropping existing table if necessary
+2026-07-24 09:43:00 | INFO | BI | Creating dim_courses table
+2026-07-24 09:43:01 | INFO | BI | dim_courses created.
+2026-07-24 09:43:01 | INFO | BI | dim_students created.
+2026-07-24 09:43:01 | INFO | BI | START create enrollments fact table....
+2026-07-24 09:43:01 | INFO | BI | Dropping existing table if necessary
+2026-07-24 09:43:01 | INFO | BI | Creating fact_enrollments table
+2026-07-24 09:43:01 | INFO | BI | fact_enrollments created.
+2026-07-24 09:43:01 | INFO | BI | Verifying schema...
+2026-07-24 09:43:01 | INFO | BI | Tables in warehouse: ['dim_courses', 'dim_students', 'fact_enrollments']
+2026-07-24 09:43:01 | INFO | BI | Workflow complete.
+2026-07-24 09:43:01 | INFO | BI | ========================
+2026-07-24 09:43:01 | INFO | BI | Executed successfully!
+2026-07-24 09:43:01 | INFO | BI | ========================

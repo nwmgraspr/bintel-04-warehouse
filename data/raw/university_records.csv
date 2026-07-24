@@ -1,0 +1,101 @@
+EnrollmentID,EnrollmentDate,StudentID,StudentName,Major,StudentEnrollmentDate,CourseID,CourseName,Department,CreditHours,Semester,InstructorID,Grade
+1001,2025-09-13,17,Henry Martin,Business,2022-04-22,109,Engineering Mechanics,Engineering,4,Spring 2025,527,B-
+1002,2025-12-07,49,Yara Green,Mathematics,2021-09-20,112,Clinical Nursing,Nursing,4,Summer 2024,591,B+
+1003,2025-10-27,26,Zach Clark,Accounting,2022-07-03,111,Macroeconomics,Economics,3,Fall 2024,556,B-
+1004,2024-09-10,29,Olivia Wilson,Chemistry,2021-10-13,102,Programming I,Computer Science,4,Summer 2024,508,B+
+1005,2025-07-21,2,Henry Thomas,Mathematics,2021-07-29,110,Financial Accounting,Accounting,3,Summer 2024,575,A-
+1006,2025-12-25,1,Uma Davis,Computer Science,2022-07-18,102,Programming I,Computer Science,4,Spring 2024,529,A
+1007,2024-03-13,3,Victoria Green,Business,2024-04-24,106,Linear Algebra,Mathematics,3,Summer 2024,535,C+
+1008,2025-07-06,32,Mia Lewis,Biology,2021-10-11,104,Marketing Principles,Business,3,Summer 2024,592,B-
+1009,2024-09-05,37,Isabella Green,Computer Science,2024-10-25,108,Organic Chemistry,Chemistry,4,Spring 2025,552,A-
+1010,2025-11-05,7,William Green,Accounting,2022-03-28,102,Programming I,Computer Science,4,Spring 2025,545,B
+1011,2024-02-25,27,Carol Anderson,Psychology,2022-10-07,108,Organic Chemistry,Chemistry,4,Spring 2024,507,B
+1012,2024-04-21,47,Henry Smith,Biology,2024-03-07,106,Linear Algebra,Mathematics,3,Summer 2024,524,A-
+1013,2024-05-23,35,Noah Adams,Business,2023-02-28,108,Organic Chemistry,Chemistry,4,Spring 2025,523,B+
+1014,2024-03-18,30,Henry Green,Nursing,2022-06-23,104,Marketing Principles,Business,3,Spring 2025,570,A
+1015,2025-07-07,4,Noah Smith,Computer Science,2021-07-11,111,Macroeconomics,Economics,3,Spring 2024,511,C
+1016,2025-02-20,16,Grace Brown,Computer Science,2024-09-16,103,Business Analytics,Business,3,Spring 2025,561,A-
+1017,2024-06-17,26,Zach Clark,Accounting,2022-07-03,101,Database Systems,Computer Science,3,Spring 2025,500,B
+1018,2025-04-10,17,Henry Martin,Business,2022-04-22,113,Developmental Psychology,Psychology,3,Fall 2024,554,C+
+1019,2025-07-23,47,Henry Smith,Biology,2024-03-07,113,Developmental Psychology,Psychology,3,Spring 2025,519,A-
+1020,2024-02-29,19,Uma Lewis,Mathematics,2023-01-29,104,Marketing Principles,Business,3,Spring 2024,595,B+
+1021,2025-08-21,4,Noah Smith,Computer Science,2021-07-11,101,Database Systems,Computer Science,3,Spring 2025,564,C
+1022,2024-02-28,34,David Wilson,Mathematics,2024-10-25,103,Business Analytics,Business,3,Spring 2024,523,A
+1023,2025-11-22,39,Yara Clark,Business,2022-08-25,102,Programming I,Computer Science,4,Summer 2024,551,A
+1024,2025-08-15,37,Isabella Green,Computer Science,2024-10-25,104,Marketing Principles,Business,3,Spring 2024,579,A
+1025,2025-08-20,27,Carol Anderson,Psychology,2022-10-07,111,Macroeconomics,Economics,3,Fall 2024,533,A-
+1026,2024-11-17,43,Quinn Adams,Biology,2021-11-10,112,Clinical Nursing,Nursing,4,Summer 2024,533,B
+1027,2025-10-22,9,Yara Taylor,Accounting,2022-11-28,111,Macroeconomics,Economics,3,Fall 2024,558,B+
+1028,2024-01-10,49,Yara Green,Mathematics,2021-09-20,102,Programming I,Computer Science,4,Spring 2025,579,B-
+1029,2025-07-04,7,William Green,Accounting,2022-03-28,102,Programming I,Computer Science,4,Summer 2024,564,B+
+1030,2024-03-11,9,Yara Taylor,Accounting,2022-11-28,106,Linear Algebra,Mathematics,3,Summer 2024,547,B+
+1031,2025-07-10,11,David Brown,Accounting,2021-07-18,108,Organic Chemistry,Chemistry,4,Fall 2024,578,C
+1032,2024-01-09,42,Quinn Davis,Chemistry,2024-08-01,109,Engineering Mechanics,Engineering,4,Fall 2024,584,A
+1033,2024-04-28,9,Yara Taylor,Accounting,2022-11-28,105,Calculus I,Mathematics,4,Spring 2024,595,B-
+1034,2024-10-15,10,Isabella Wilson,Biology,2022-11-21,105,Calculus I,Mathematics,4,Summer 2024,591,B+
+1035,2025-10-11,14,David Walker,Business,2024-02-05,111,Macroeconomics,Economics,3,Fall 2024,564,B
+1036,2024-04-04,17,Henry Martin,Business,2022-04-22,101,Database Systems,Computer Science,3,Spring 2025,535,A
+1037,2024-05-13,1,Uma Davis,Computer Science,2022-07-18,106,Linear Algebra,Mathematics,3,Fall 2024,520,C+
+1038,2025-12-23,29,Olivia Wilson,Chemistry,2021-10-13,109,Engineering Mechanics,Engineering,4,Spring 2025,571,A
+1039,2025-12-08,8,Olivia Baker,Chemistry,2021-01-14,102,Programming I,Computer Science,4,Summer 2024,569,A
+1040,2025-07-19,24,William Green,Biology,2024-11-03,110,Financial Accounting,Accounting,3,Summer 2024,555,A-
+1041,2025-01-08,3,Victoria Green,Business,2024-04-24,105,Calculus I,Mathematics,4,Spring 2024,545,A-
+1042,2025-11-13,44,Liam Taylor,Nursing,2023-12-23,104,Marketing Principles,Business,3,Spring 2024,545,C
+1043,2025-09-27,36,Mia Adams,Economics,2023-12-20,107,General Biology,Biology,4,Summer 2024,530,C
+1044,2024-06-30,11,David Brown,Accounting,2021-07-18,113,Developmental Psychology,Psychology,3,Spring 2025,503,A-
+1045,2025-02-25,48,Carol Brown,Economics,2021-05-22,106,Linear Algebra,Mathematics,3,Summer 2024,534,A-
+1046,2025-01-26,45,Alice Adams,Engineering,2023-09-28,102,Programming I,Computer Science,4,Spring 2024,560,A-
+1047,2024-12-24,13,Zach Smith,Economics,2024-01-04,108,Organic Chemistry,Chemistry,4,Fall 2024,529,A-
+1048,2024-07-16,2,Henry Thomas,Mathematics,2021-07-29,111,Macroeconomics,Economics,3,Spring 2025,542,B+
+1049,2024-10-12,5,Grace Thomas,Nursing,2024-05-17,113,Developmental Psychology,Psychology,3,Fall 2024,582,B-
+1050,2025-07-03,26,Zach Clark,Accounting,2022-07-03,111,Macroeconomics,Economics,3,Fall 2024,503,A
+1051,2025-08-17,17,Henry Martin,Business,2022-04-22,103,Business Analytics,Business,3,Fall 2024,504,A
+1052,2024-12-19,39,Yara Clark,Business,2022-08-25,107,General Biology,Biology,4,Fall 2024,555,B-
+1053,2025-01-29,33,Quinn King,Business,2021-04-07,102,Programming I,Computer Science,4,Summer 2024,532,A
+1054,2024-01-02,46,Alice Davis,Engineering,2022-09-22,107,General Biology,Biology,4,Summer 2024,546,B
+1055,2024-12-04,5,Grace Thomas,Nursing,2024-05-17,111,Macroeconomics,Economics,3,Fall 2024,584,C
+1056,2024-11-03,8,Olivia Baker,Chemistry,2021-01-14,112,Clinical Nursing,Nursing,4,Fall 2024,585,B
+1057,2025-12-14,21,Victoria Brown,Psychology,2024-07-24,107,General Biology,Biology,4,Fall 2024,570,A-
+1058,2025-11-11,13,Zach Smith,Economics,2024-01-04,107,General Biology,Biology,4,Spring 2025,586,C+
+1059,2025-08-05,12,Liam Lewis,Psychology,2022-06-26,110,Financial Accounting,Accounting,3,Fall 2024,551,B-
+1060,2024-10-20,1,Uma Davis,Computer Science,2022-07-18,105,Calculus I,Mathematics,4,Summer 2024,555,C
+1061,2025-11-01,38,Xavier Davis,Nursing,2022-07-01,110,Financial Accounting,Accounting,3,Fall 2024,559,B
+1062,2024-08-06,29,Olivia Wilson,Chemistry,2021-10-13,111,Macroeconomics,Economics,3,Spring 2025,594,A-
+1063,2024-10-17,43,Quinn Adams,Biology,2021-11-10,102,Programming I,Computer Science,4,Fall 2024,511,C
+1064,2025-11-19,49,Yara Green,Mathematics,2021-09-20,104,Marketing Principles,Business,3,Fall 2024,528,C
+1065,2024-01-26,13,Zach Smith,Economics,2024-01-04,103,Business Analytics,Business,3,Spring 2024,531,B
+1066,2024-03-15,40,Noah Taylor,Economics,2021-01-07,113,Developmental Psychology,Psychology,3,Spring 2025,553,C+
+1067,2025-12-14,37,Isabella Green,Computer Science,2024-10-25,104,Marketing Principles,Business,3,Spring 2025,563,B
+1068,2025-11-02,16,Grace Brown,Computer Science,2024-09-16,103,Business Analytics,Business,3,Spring 2024,596,C
+1069,2025-03-11,50,Victoria King,Nursing,2021-12-05,102,Programming I,Computer Science,4,Summer 2024,522,C
+1070,2025-04-20,45,Alice Adams,Engineering,2023-09-28,109,Engineering Mechanics,Engineering,4,Spring 2024,571,A-
+1071,2024-05-16,8,Olivia Baker,Chemistry,2021-01-14,108,Organic Chemistry,Chemistry,4,Spring 2025,585,B-
+1072,2024-11-20,36,Mia Adams,Economics,2023-12-20,110,Financial Accounting,Accounting,3,Spring 2025,578,C
+1073,2025-03-12,47,Henry Smith,Biology,2024-03-07,109,Engineering Mechanics,Engineering,4,Spring 2025,520,C+
+1074,2024-09-22,31,Xavier Baker,Accounting,2024-04-10,108,Organic Chemistry,Chemistry,4,Summer 2024,581,B+
+1075,2025-06-17,50,Victoria King,Nursing,2021-12-05,113,Developmental Psychology,Psychology,3,Spring 2025,580,A-
+1076,2024-03-20,18,David Walker,Chemistry,2023-07-18,108,Organic Chemistry,Chemistry,4,Fall 2024,530,B+
+1077,2025-07-07,22,Frank Green,Biology,2021-12-01,106,Linear Algebra,Mathematics,3,Spring 2024,517,A-
+1078,2025-12-11,15,Jack Adams,Engineering,2024-03-28,107,General Biology,Biology,4,Summer 2024,590,A-
+1079,2025-02-21,5,Grace Thomas,Nursing,2024-05-17,107,General Biology,Biology,4,Fall 2024,569,B
+1080,2024-07-30,27,Carol Anderson,Psychology,2022-10-07,101,Database Systems,Computer Science,3,Spring 2025,549,C
+1081,2024-01-21,38,Xavier Davis,Nursing,2022-07-01,112,Clinical Nursing,Nursing,4,Spring 2025,561,A
+1082,2025-02-03,23,Olivia Walker,Chemistry,2024-08-03,105,Calculus I,Mathematics,4,Spring 2025,568,C+
+1083,2025-09-09,48,Carol Brown,Economics,2021-05-22,109,Engineering Mechanics,Engineering,4,Summer 2024,562,A-
+1084,2025-05-12,18,David Walker,Chemistry,2023-07-18,107,General Biology,Biology,4,Spring 2024,549,B+
+1085,2025-02-18,43,Quinn Adams,Biology,2021-11-10,111,Macroeconomics,Economics,3,Summer 2024,559,A-
+1086,2024-01-28,40,Noah Taylor,Economics,2021-01-07,109,Engineering Mechanics,Engineering,4,Spring 2025,575,B-
+1087,2024-03-26,43,Quinn Adams,Biology,2021-11-10,101,Database Systems,Computer Science,3,Spring 2025,517,C
+1088,2024-02-21,30,Henry Green,Nursing,2022-06-23,103,Business Analytics,Business,3,Fall 2024,548,B+
+1089,2024-11-30,14,David Walker,Business,2024-02-05,108,Organic Chemistry,Chemistry,4,Fall 2024,597,B
+1090,2025-03-07,18,David Walker,Chemistry,2023-07-18,113,Developmental Psychology,Psychology,3,Fall 2024,510,B
+1091,2025-07-06,2,Henry Thomas,Mathematics,2021-07-29,112,Clinical Nursing,Nursing,4,Spring 2024,544,A-
+1092,2025-10-29,42,Quinn Davis,Chemistry,2024-08-01,102,Programming I,Computer Science,4,Spring 2024,596,A
+1093,2024-01-21,16,Grace Brown,Computer Science,2024-09-16,104,Marketing Principles,Business,3,Summer 2024,530,A-
+1094,2024-04-27,31,Xavier Baker,Accounting,2024-04-10,111,Macroeconomics,Economics,3,Summer 2024,559,C+
+1095,2025-01-12,17,Henry Martin,Business,2022-04-22,113,Developmental Psychology,Psychology,3,Summer 2024,577,B-
+1096,2024-04-27,48,Carol Brown,Economics,2021-05-22,112,Clinical Nursing,Nursing,4,Summer 2024,539,A
+1097,2024-11-15,38,Xavier Davis,Nursing,2022-07-01,101,Database Systems,Computer Science,3,Spring 2025,550,C+
+1098,2025-08-29,13,Zach Smith,Economics,2024-01-04,102,Programming I,Computer Science,4,Summer 2024,513,C+
+1099,2025-12-01,50,Victoria King,Nursing,2021-12-05,105,Calculus I,Mathematics,4,Spring 2024,572,C
+1100,2025-06-29,3,Victoria Green,Business,2024-04-24,106,Linear Algebra,Mathematics,3,Spring 2025,584,B+
