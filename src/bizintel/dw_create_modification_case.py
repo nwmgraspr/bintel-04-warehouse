@@ -25,7 +25,7 @@ Output:
 
 Run command:
 
-uv run python -m bizintel.dw_create_modification.case
+uv run python -m bizintel.dw_create_modification_case
 """
 
 
