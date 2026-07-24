@@ -43,9 +43,9 @@ uv run python -m bizintel.generate_university_dataset
 # ==========================================================
 
 import csv
-import random
 from datetime import datetime, timedelta
 from pathlib import Path
+import random
 from typing import Final
 
 # ==========================================================
@@ -65,18 +65,55 @@ random.seed(42)
 # ==========================================================
 
 FIRST_NAMES = [
-    "Alice","Bob","Carol","David","Emma",
-    "Frank","Grace","Henry","Isabella","Jack",
-    "Karen","Liam","Mia","Noah","Olivia",
-    "Paul","Quinn","Ryan","Sophia","Thomas",
-    "Uma","Victoria","William","Xavier","Yara","Zach"
+    "Alice",
+    "Bob",
+    "Carol",
+    "David",
+    "Emma",
+    "Frank",
+    "Grace",
+    "Henry",
+    "Isabella",
+    "Jack",
+    "Karen",
+    "Liam",
+    "Mia",
+    "Noah",
+    "Olivia",
+    "Paul",
+    "Quinn",
+    "Ryan",
+    "Sophia",
+    "Thomas",
+    "Uma",
+    "Victoria",
+    "William",
+    "Xavier",
+    "Yara",
+    "Zach",
 ]
 
 LAST_NAMES = [
-    "Johnson","Smith","Brown","Davis","Wilson",
-    "Taylor","Anderson","Thomas","Moore","Martin",
-    "Clark","Lewis","Walker","Young","Allen",
-    "King","Scott","Green","Baker","Adams"
+    "Johnson",
+    "Smith",
+    "Brown",
+    "Davis",
+    "Wilson",
+    "Taylor",
+    "Anderson",
+    "Thomas",
+    "Moore",
+    "Martin",
+    "Clark",
+    "Lewis",
+    "Walker",
+    "Young",
+    "Allen",
+    "King",
+    "Scott",
+    "Green",
+    "Baker",
+    "Adams",
 ]
 
 MAJORS = [
@@ -89,58 +126,28 @@ MAJORS = [
     "Accounting",
     "Economics",
     "Nursing",
-    "Psychology"
+    "Psychology",
 ]
 
 COURSES = [
-
-    (101,"Database Systems","Computer Science",3),
-
-    (102,"Programming I","Computer Science",4),
-
-    (103,"Business Analytics","Business",3),
-
-    (104,"Marketing Principles","Business",3),
-
-    (105,"Calculus I","Mathematics",4),
-
-    (106,"Linear Algebra","Mathematics",3),
-
-    (107,"General Biology","Biology",4),
-
-    (108,"Organic Chemistry","Chemistry",4),
-
-    (109,"Engineering Mechanics","Engineering",4),
-
-    (110,"Financial Accounting","Accounting",3),
-
-    (111,"Macroeconomics","Economics",3),
-
-    (112,"Clinical Nursing","Nursing",4),
-
-    (113,"Developmental Psychology","Psychology",3)
-
+    (101, "Database Systems", "Computer Science", 3),
+    (102, "Programming I", "Computer Science", 4),
+    (103, "Business Analytics", "Business", 3),
+    (104, "Marketing Principles", "Business", 3),
+    (105, "Calculus I", "Mathematics", 4),
+    (106, "Linear Algebra", "Mathematics", 3),
+    (107, "General Biology", "Biology", 4),
+    (108, "Organic Chemistry", "Chemistry", 4),
+    (109, "Engineering Mechanics", "Engineering", 4),
+    (110, "Financial Accounting", "Accounting", 3),
+    (111, "Macroeconomics", "Economics", 3),
+    (112, "Clinical Nursing", "Nursing", 4),
+    (113, "Developmental Psychology", "Psychology", 3),
 ]
 
-SEMESTERS = [
+SEMESTERS = ["Spring 2024", "Summer 2024", "Fall 2024", "Spring 2025"]
 
-    "Spring 2024",
-    "Summer 2024",
-    "Fall 2024",
-    "Spring 2025"
-
-]
-
-GRADES = [
-
-    "A",
-    "A-",
-    "B+",
-    "B",
-    "B-",
-    "C+",
-    "C"
-  ]
+GRADES = ["A", "A-", "B+", "B", "B-", "C+", "C"]
 # ==========================================================
 # SECTION 2
 # Helper Functions
@@ -160,7 +167,6 @@ def create_student_name() -> str:
     last = random.choice(LAST_NAMES)
 
     return f"{first} {last}"
-
 
 
 def create_date(
@@ -193,25 +199,16 @@ def create_date(
         31,
     )
 
-    days_between = (
-        end_date - start_date
-    ).days
+    days_between = (end_date - start_date).days
 
     random_days = random.randint(
         0,
         days_between,
     )
 
-    result = (
-        start_date
-        +
-        timedelta(days=random_days)
-    )
+    result = start_date + timedelta(days=random_days)
 
-    return result.strftime(
-        "%Y-%m-%d"
-    )
-
+    return result.strftime("%Y-%m-%d")
 
 
 def create_students(
@@ -234,27 +231,14 @@ def create_students(
         1,
         number_of_students + 1,
     ):
-
         students[student_id] = {
-
-            "StudentID":
-                student_id,
-
-            "StudentName":
-                create_student_name(),
-
-            "Major":
-                random.choice(
-                    MAJORS
-                ),
-
-            "StudentEnrollmentDate":
-                create_date()
-
+            "StudentID": student_id,
+            "StudentName": create_student_name(),
+            "Major": random.choice(MAJORS),
+            "StudentEnrollmentDate": create_date(),
         }
 
     return students
-
 
 
 def create_courses() -> dict:
@@ -268,25 +252,14 @@ def create_courses() -> dict:
     courses = {}
 
     for course in COURSES:
-
         courses[course[0]] = {
-
-            "CourseID":
-                course[0],
-
-            "CourseName":
-                course[1],
-
-            "Department":
-                course[2],
-
-            "CreditHours":
-                course[3]
-
+            "CourseID": course[0],
+            "CourseName": course[1],
+            "Department": course[2],
+            "CreditHours": course[3],
         }
 
     return courses
-
 
 
 def create_instructor_id() -> int:
@@ -303,7 +276,6 @@ def create_instructor_id() -> int:
     )
 
 
-
 def create_enrollment_date() -> str:
     """
     Create enrollment transaction date.
@@ -316,7 +288,9 @@ def create_enrollment_date() -> str:
         2024,
         2025,
     )
-  # ==========================================================
+
+
+# ==========================================================
 # SECTION 3
 # Generate Raw Enrollment Dataset
 # ==========================================================
@@ -350,113 +324,47 @@ def create_raw_records(
 
     # Create reusable student records
 
-    students = create_students(
-        50
-    )
+    students = create_students(50)
 
     # Create reusable course records
 
     courses = create_courses()
 
-
     for enrollment_id in range(
         1001,
         1001 + number_of_records,
     ):
-
         # Select random student
 
-        student_id = random.choice(
-            list(students.keys())
-        )
+        student_id = random.choice(list(students.keys()))
 
-        student = students[
-            student_id
-        ]
-
+        student = students[student_id]
 
         # Select random course
 
-        course_id = random.choice(
-            list(courses.keys())
-        )
+        course_id = random.choice(list(courses.keys()))
 
-        course = courses[
-            course_id
-        ]
-
+        course = courses[course_id]
 
         record = {
-
-            "EnrollmentID":
-                enrollment_id,
-
-            "EnrollmentDate":
-                create_enrollment_date(),
-
-            "StudentID":
-                student[
-                    "StudentID"
-                ],
-
-            "StudentName":
-                student[
-                    "StudentName"
-                ],
-
-            "Major":
-                student[
-                    "Major"
-                ],
-
-            "StudentEnrollmentDate":
-                student[
-                    "StudentEnrollmentDate"
-                ],
-
-            "CourseID":
-                course[
-                    "CourseID"
-                ],
-
-            "CourseName":
-                course[
-                    "CourseName"
-                ],
-
-            "Department":
-                course[
-                    "Department"
-                ],
-
-            "CreditHours":
-                course[
-                    "CreditHours"
-                ],
-
-            "Semester":
-                random.choice(
-                    SEMESTERS
-                ),
-
-            "InstructorID":
-                create_instructor_id(),
-
-            "Grade":
-                random.choice(
-                    GRADES
-                )
-
+            "EnrollmentID": enrollment_id,
+            "EnrollmentDate": create_enrollment_date(),
+            "StudentID": student["StudentID"],
+            "StudentName": student["StudentName"],
+            "Major": student["Major"],
+            "StudentEnrollmentDate": student["StudentEnrollmentDate"],
+            "CourseID": course["CourseID"],
+            "CourseName": course["CourseName"],
+            "Department": course["Department"],
+            "CreditHours": course["CreditHours"],
+            "Semester": random.choice(SEMESTERS),
+            "InstructorID": create_instructor_id(),
+            "Grade": random.choice(GRADES),
         }
 
-
-        records.append(
-            record
-        )
-
+        records.append(record)
 
     return records
-
 
 
 def write_csv(
@@ -478,37 +386,21 @@ def write_csv(
         exist_ok=True,
     )
 
-
     LOG_HEADER = [
-
         "EnrollmentID",
-
         "EnrollmentDate",
-
         "StudentID",
-
         "StudentName",
-
         "Major",
-
         "StudentEnrollmentDate",
-
         "CourseID",
-
         "CourseName",
-
         "Department",
-
         "CreditHours",
-
         "Semester",
-
         "InstructorID",
-
-        "Grade"
-
+        "Grade",
     ]
-
 
     with open(
         OUTPUT_FILE,
@@ -516,30 +408,21 @@ def write_csv(
         newline="",
         encoding="utf-8",
     ) as file:
-
-
         writer = csv.DictWriter(
             file,
             fieldnames=LOG_HEADER,
         )
 
-
         writer.writeheader()
 
+        writer.writerows(records)
 
-        writer.writerows(
-            records
-        )
+    print(f"Created dataset: {OUTPUT_FILE}")
+
+    print(f"Rows created: {len(records)}")
 
 
-    print(
-        f"Created dataset: {OUTPUT_FILE}"
-    )
-
-    print(
-        f"Rows created: {len(records)}"
-    )
-  # ==========================================================
+# ==========================================================
 # SECTION 4
 # Main Function
 # ==========================================================
@@ -561,31 +444,17 @@ def main() -> None:
     print("START university dataset generation")
     print("========================")
 
+    print("Creating raw enrollment records...")
 
-    print(
-        "Creating raw enrollment records..."
-    )
+    records = create_raw_records(NUMBER_OF_RECORDS)
 
+    print("Writing CSV file...")
 
-    records = create_raw_records(
-        NUMBER_OF_RECORDS
-    )
-
-
-    print(
-        "Writing CSV file..."
-    )
-
-
-    write_csv(
-        records
-    )
-
+    write_csv(records)
 
     print("========================")
     print("Dataset generation complete")
     print("========================")
-
 
 
 # ==========================================================
