@@ -1,39 +1,47 @@
 """
 dw_create_university_custom.py
 
-Creates a University Enrollment data warehouse using DuckDB.
+An example that creates a university enrollment star schema
+data warehouse using DuckDB.
 
-This project combines SQL and Python to build a star schema data warehouse.
-It recreates an empty warehouse for development and testing purposes.
-Run this script before loading data with an ETL process.
+This project combines SQL and Python - two key skills for BI development.
+It demonstrates recreating an empty star schema data warehouse.
 
-Author: Ralph Massaquoi
-Date: 2026
+After calling this, call the etl_university_custom.py script
+to load data into the warehouse.
+
+Author: Your Name
+Date: 2026-07
 
 Development:
-    - Drops existing warehouse tables.
-    - Recreates all dimension and fact tables.
-    - Verifies the schema after creation.
+    This script is intended for development and testing purposes.
+    - It drops and recreates the warehouse tables.
+    - This ensures a clean slate for testing.
+    - This approach is suitable for development but should be
+      used carefully in production environments.
 
-Star Schema:
-    Dimension Tables
+Process:
+    - Create the artifacts/university folder if it does not exist.
+    - Connect to the DuckDB university warehouse.
+    - Drop existing tables if they exist.
+    - Create dimension tables:
         - dim_students
         - dim_courses
-        - dim_instructors
-
-    Fact Table
+    - Create the fact table:
         - fact_enrollments
+    - Verify table creation.
 
 Output:
-    artifacts/university_dw.duckdb
+    artifacts/university/university_registration.duckdb
 
-Terminal command:
+Terminal command to run this file:
 
 uv run python -m bizintel.dw_create_university_custom
 """
-# ==========================
-# IMPORTS
-# ==========================
+
+# ============================================================
+# Section 1. Import dependencies
+# ============================================================
 
 from pathlib import Path
 from typing import Final
@@ -43,160 +51,219 @@ from datafun_toolkit.logger import log_path
 
 from bizintel.utils_logger import LOG, log_header
 
-# ==========================
-# CONSTANTS
-# ==========================
+# ============================================================
+# Constants
+# ============================================================
 
-DW_FILE: Final[Path] = Path("artifacts/university_dw.duckdb")
+DW_FILE: Final[Path] = Path(
+    "artifacts/university_registration.duckdb"
+)
 
+# ============================================================
+# Create Student Dimension
+# ============================================================
 
-# ==========================
-# CREATE DIMENSION TABLES
-# ==========================
+def create_dim_students(
+    conn: duckdb.DuckDBPyConnection,
+) -> None:
+    """
+    Create the Students dimension table.
+    """
 
-def create_dim_students(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create student dimension table."""
+    LOG.info("START create students dimension table....")
 
-    LOG.info("Creating dim_students...")
+    LOG.info("Dropping existing table if necessary")
 
-    conn.execute("DROP TABLE IF EXISTS dim_students")
+    conn.execute("""
+        DROP TABLE IF EXISTS dim_students
+    """)
+
+    LOG.info("Creating dim_students table")
 
     conn.execute("""
         CREATE TABLE dim_students (
-            StudentID      INTEGER PRIMARY KEY,
-            StudentName    VARCHAR,
-            Major          VARCHAR,
-            EnrollmentYear INTEGER
+
+            StudentID INTEGER PRIMARY KEY,
+
+            StudentName VARCHAR,
+
+            Major VARCHAR,
+
+            EnrollmentDate DATE
+
         )
     """)
+    # ============================================================
+# Create Course Dimension
+# ============================================================
 
-    LOG.info("dim_students created.")
+def create_dim_courses(
+    conn: duckdb.DuckDBPyConnection,
+) -> None:
+    """
+    Create the Courses dimension table.
+    """
 
+    LOG.info("START create courses dimension table....")
 
-def create_dim_courses(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create course dimension table."""
+    LOG.info("Dropping existing table if necessary")
 
-    LOG.info("Creating dim_courses...")
+    conn.execute("""
+        DROP TABLE IF EXISTS dim_courses
+    """)
 
-    conn.execute("DROP TABLE IF EXISTS dim_courses")
+    LOG.info("Creating dim_courses table")
 
     conn.execute("""
         CREATE TABLE dim_courses (
-            CourseID      INTEGER PRIMARY KEY,
-            CourseName    VARCHAR,
-            Department    VARCHAR,
-            CreditHours   INTEGER
+
+            CourseID INTEGER PRIMARY KEY,
+
+            CourseName VARCHAR,
+
+            Department VARCHAR,
+
+            CreditHours INTEGER
+
         )
     """)
 
     LOG.info("dim_courses created.")
 
+    LOG.info("dim_students created.")
+    # ============================================================
+# Create Enrollment Fact Table
+# ============================================================
 
-def create_dim_instructors(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create instructor dimension table."""
+def create_fact_enrollments(
+    conn: duckdb.DuckDBPyConnection,
+) -> None:
+    """
+    Create the Enrollments fact table.
+    """
 
-    LOG.info("Creating dim_instructors...")
+    LOG.info("START create enrollments fact table....")
 
-    conn.execute("DROP TABLE IF EXISTS dim_instructors")
+    LOG.info("Dropping existing table if necessary")
 
     conn.execute("""
-        CREATE TABLE dim_instructors (
-            InstructorID   INTEGER PRIMARY KEY,
-            InstructorName VARCHAR,
-            Department     VARCHAR,
-            Rank           VARCHAR
-        )
+        DROP TABLE IF EXISTS fact_enrollments
     """)
 
-    LOG.info("dim_instructors created.")
-
-
-# ==========================
-# CREATE FACT TABLE
-# ==========================
-
-def create_fact_enrollments(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create enrollment fact table."""
-
-    LOG.info("Creating fact_enrollments...")
-
-    conn.execute("DROP TABLE IF EXISTS fact_enrollments")
+    LOG.info("Creating fact_enrollments table")
 
     conn.execute("""
         CREATE TABLE fact_enrollments (
-            EnrollmentID   INTEGER PRIMARY KEY,
-            StudentID      INTEGER REFERENCES dim_students(StudentID),
-            CourseID       INTEGER REFERENCES dim_courses(CourseID),
-            InstructorID   INTEGER REFERENCES dim_instructors(InstructorID),
-            Semester       VARCHAR,
+
+            EnrollmentID INTEGER PRIMARY KEY,
+
             EnrollmentDate DATE,
-            Grade          VARCHAR
+
+            StudentID INTEGER
+                REFERENCES dim_students(StudentID),
+
+            CourseID INTEGER
+                REFERENCES dim_courses(CourseID),
+
+            Semester VARCHAR,
+
+            InstructorID INTEGER,
+
+            Grade VARCHAR
+
         )
     """)
 
     LOG.info("fact_enrollments created.")
+    # ============================================================
+# Delete Existing Tables
+# ============================================================
 
+def delete_tables(
+    conn: duckdb.DuckDBPyConnection,
+) -> None:
+    """
+    Delete all warehouse tables.
+    """
 
-# ==========================
-# DELETE TABLES
-# ==========================
+    LOG.info("Deleting old tables...")
 
-def delete_tables(conn: duckdb.DuckDBPyConnection) -> None:
-    """Delete tables before recreating."""
+    conn.execute("""
+        DROP TABLE IF EXISTS fact_enrollments
+    """)
 
-    LOG.info("Deleting existing tables...")
+    conn.execute("""
+        DROP TABLE IF EXISTS dim_courses
+    """)
 
-    conn.execute("DROP TABLE IF EXISTS fact_enrollments")
-    conn.execute("DROP TABLE IF EXISTS dim_instructors")
-    conn.execute("DROP TABLE IF EXISTS dim_courses")
-    conn.execute("DROP TABLE IF EXISTS dim_students")
+    conn.execute("""
+        DROP TABLE IF EXISTS dim_students
+    """)
 
+    LOG.info("Tables deleted.")
+    # ============================================================
+# Verify Warehouse
+# ============================================================
 
-# ==========================
-# VERIFY SCHEMA
-# ==========================
+def verify_schema(
+    conn: duckdb.DuckDBPyConnection,
+) -> None:
+    """
+    Verify warehouse schema.
+    """
 
-def verify_schema(conn: duckdb.DuckDBPyConnection) -> None:
-    """Display warehouse tables."""
+    LOG.info("Verifying schema...")
 
-    tables = conn.execute("SHOW TABLES").fetchall()
+    tables = conn.execute(
+        "SHOW TABLES"
+    ).fetchall()
 
-    LOG.info("Warehouse Tables:")
-    LOG.info([table[0] for table in tables])
-
-
-# ==========================
-# MAIN
-# ==========================
+    LOG.info(
+        f"Tables in warehouse: {[t[0] for t in tables]}"
+    )
+    # ============================================================
+# Main
+# ============================================================
 
 def main() -> None:
-    """Build University data warehouse."""
 
-    log_header(LOG, "University BI")
+    log_header(LOG, "BI")
 
-    log_path(LOG, "Warehouse:", DW_FILE)
+    LOG.info("========================")
+    LOG.info("START main()")
+    LOG.info("========================")
 
-    DW_FILE.parent.mkdir(parents=True, exist_ok=True)
+    log_path(LOG, "Data warehouse:", DW_FILE)
 
-    conn = duckdb.connect(str(DW_FILE))
+    DW_FILE.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    LOG.info("Connecting to DuckDB...")
+
+    conn = duckdb.connect(
+        str(DW_FILE)
+    )
 
     delete_tables(conn)
 
     create_dim_students(conn)
+
     create_dim_courses(conn)
-    create_dim_instructors(conn)
+
     create_fact_enrollments(conn)
 
     verify_schema(conn)
 
     conn.close()
 
-    LOG.info("University data warehouse created successfully.")
+    LOG.info("Workflow complete.")
 
+    LOG.info("========================")
+    LOG.info("Executed successfully!")
+    LOG.info("========================")
 
-# ==========================
-# RUN PROGRAM
-# ==========================
 
 if __name__ == "__main__":
     main()
