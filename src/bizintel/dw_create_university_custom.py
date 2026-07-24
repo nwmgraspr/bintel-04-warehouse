@@ -46,8 +46,8 @@ uv run python -m bizintel.dw_create_university_custom
 from pathlib import Path
 from typing import Final
 
-import duckdb
 from datafun_toolkit.logger import log_path
+import duckdb
 
 from bizintel.utils_logger import LOG, log_header
 
@@ -55,13 +55,12 @@ from bizintel.utils_logger import LOG, log_header
 # Constants
 # ============================================================
 
-DW_FILE: Final[Path] = Path(
-    "artifacts/university_registration.duckdb"
-)
+DW_FILE: Final[Path] = Path("artifacts/university_registration.duckdb")
 
 # ============================================================
 # Create Student Dimension
 # ============================================================
+
 
 def create_dim_students(
     conn: duckdb.DuckDBPyConnection,
@@ -94,8 +93,11 @@ def create_dim_students(
         )
     """)
     # ============================================================
+
+
 # Create Course Dimension
 # ============================================================
+
 
 def create_dim_courses(
     conn: duckdb.DuckDBPyConnection,
@@ -132,8 +134,11 @@ def create_dim_courses(
 
     LOG.info("dim_students created.")
     # ============================================================
+
+
 # Create Enrollment Fact Table
 # ============================================================
+
 
 def create_fact_enrollments(
     conn: duckdb.DuckDBPyConnection,
@@ -176,8 +181,11 @@ def create_fact_enrollments(
 
     LOG.info("fact_enrollments created.")
     # ============================================================
+
+
 # Delete Existing Tables
 # ============================================================
+
 
 def delete_tables(
     conn: duckdb.DuckDBPyConnection,
@@ -202,8 +210,11 @@ def delete_tables(
 
     LOG.info("Tables deleted.")
     # ============================================================
+
+
 # Verify Warehouse
 # ============================================================
+
 
 def verify_schema(
     conn: duckdb.DuckDBPyConnection,
@@ -214,16 +225,15 @@ def verify_schema(
 
     LOG.info("Verifying schema...")
 
-    tables = conn.execute(
-        "SHOW TABLES"
-    ).fetchall()
+    tables = conn.execute("SHOW TABLES").fetchall()
 
-    LOG.info(
-        f"Tables in warehouse: {[t[0] for t in tables]}"
-    )
+    LOG.info(f"Tables in warehouse: {[t[0] for t in tables]}")
     # ============================================================
+
+
 # Main
 # ============================================================
+
 
 def main() -> None:
 
@@ -242,9 +252,7 @@ def main() -> None:
 
     LOG.info("Connecting to DuckDB...")
 
-    conn = duckdb.connect(
-        str(DW_FILE)
-    )
+    conn = duckdb.connect(str(DW_FILE))
 
     delete_tables(conn)
 
