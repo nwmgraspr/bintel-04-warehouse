@@ -616,3 +616,145 @@
 2026-07-23 12:20:36 | INFO | BI | ========================
 2026-07-23 12:20:36 | INFO | BI | Executed successfully!
 2026-07-23 12:20:36 | INFO | BI | ========================
+2026-07-23 12:25:09 | INFO | BI | === RUN START ===
+2026-07-23 12:25:09 | INFO | BI | project=BI
+2026-07-23 12:25:09 | INFO | BI | repo_dir=bintel-04-warehouse
+2026-07-23 12:25:09 | INFO | BI | python=3.14.6
+2026-07-23 12:25:09 | INFO | BI | os=Windows 10
+2026-07-23 12:25:09 | INFO | BI | shell=powershell
+2026-07-23 12:25:09 | INFO | BI | cwd=.
+2026-07-23 12:25:09 | INFO | BI | github_actions=False
+2026-07-23 12:25:09 | INFO | BI | ========================
+2026-07-23 12:25:09 | INFO | BI | START main()
+2026-07-23 12:25:09 | INFO | BI | ========================
+2026-07-23 12:25:09 | INFO | BI | Data warehouse: = artifacts\smart_sales.duckdb
+2026-07-23 12:25:09 | INFO | BI | Create the artifacts/ folder if it does not exist
+2026-07-23 12:25:09 | INFO | BI | Connect to DuckDB - creates the file if it does not exist
+2026-07-23 12:25:09 | INFO | BI | Connecting to DuckDB data warehouse........
+2026-07-23 12:25:09 | INFO | BI | Created conn: a DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | CALL a function to delete tables in reverse order of creation
+2026-07-23 12:25:09 | INFO | BI | START delete tables....
+2026-07-23 12:25:09 | INFO | BI | - Dropping fact_sales table if it exists
+2026-07-23 12:25:09 | INFO | BI | - Dropping dim_campaigns table if it exists
+2026-07-23 12:25:09 | INFO | BI | - Dropping dim_stores table if it exists
+2026-07-23 12:25:09 | INFO | BI | - Dropping dim_products table if it exists
+2026-07-23 12:25:09 | INFO | BI | - Dropping dim_customers table if it exists
+2026-07-23 12:25:09 | INFO | BI |   All tables deleted.
+2026-07-23 12:25:09 | INFO | BI | CALL a function to create dim_customers........
+2026-07-23 12:25:09 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | START create dim_customers
+2026-07-23 12:25:09 | INFO | BI | dim_customers created.
+2026-07-23 12:25:09 | INFO | BI | CALL a function to create dim_products........
+2026-07-23 12:25:09 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | START create dim_products
+2026-07-23 12:25:09 | INFO | BI | dim_products created.
+2026-07-23 12:25:09 | INFO | BI | CALL a function to create dim_stores........
+2026-07-23 12:25:09 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | START create dim_stores
+2026-07-23 12:25:09 | INFO | BI | Drop existing dim_stores table.
+2026-07-23 12:25:09 | INFO | BI | Create dim_stores table.
+2026-07-23 12:25:09 | INFO | BI | dim_stores created.
+2026-07-23 12:25:09 | INFO | BI | CALL a function to create dim_campaigns........
+2026-07-23 12:25:09 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | START create dim_campaigns
+2026-07-23 12:25:09 | INFO | BI | Drop existing dim_campaigns table.
+2026-07-23 12:25:09 | INFO | BI | Create dim_campaigns table.
+2026-07-23 12:25:09 | INFO | BI | dim_campaigns created.
+2026-07-23 12:25:09 | INFO | BI | CALL a function to create fact_sales........
+2026-07-23 12:25:09 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | START create fact_sales
+2026-07-23 12:25:09 | INFO | BI | Drop existing fact_sales table.
+2026-07-23 12:25:09 | INFO | BI | Create fact_sales table.
+2026-07-23 12:25:09 | INFO | BI | fact_sales created.
+2026-07-23 12:25:09 | INFO | BI | CALL a function to verify the schema........
+2026-07-23 12:25:09 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | START verify schema
+2026-07-23 12:25:09 | INFO | BI | Tables in warehouse: ['dim_campaigns', 'dim_customers', 'dim_products', 'dim_stores', 'fact_sales']
+2026-07-23 12:25:09 | INFO | BI | CALL a function to verify row counts........
+2026-07-23 12:25:09 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-23 12:25:09 | INFO | BI | START verify row counts....
+2026-07-23 12:25:09 | INFO | BI | Checking row count for dim_customers
+2026-07-23 12:25:09 | INFO | BI |   dim_customers: 0 rows
+2026-07-23 12:25:09 | INFO | BI | Checking row count for dim_products
+2026-07-23 12:25:09 | INFO | BI |   dim_products: 0 rows
+2026-07-23 12:25:09 | INFO | BI | Checking row count for dim_stores
+2026-07-23 12:25:09 | INFO | BI |   dim_stores: 0 rows
+2026-07-23 12:25:09 | INFO | BI | Checking row count for dim_campaigns
+2026-07-23 12:25:09 | INFO | BI |   dim_campaigns: 0 rows
+2026-07-23 12:25:09 | INFO | BI | Checking row count for fact_sales
+2026-07-23 12:25:09 | INFO | BI |   fact_sales: 0 rows
+2026-07-23 12:25:09 | INFO | BI | Workflow 1-CREATE DW complete
+2026-07-23 12:25:09 | INFO | BI | ========================
+2026-07-23 12:25:09 | INFO | BI | Executed successfully!
+2026-07-23 12:25:09 | INFO | BI | ========================
+2026-07-24 00:33:32 | INFO | BI | === RUN START ===
+2026-07-24 00:33:32 | INFO | BI | project=BI
+2026-07-24 00:33:32 | INFO | BI | repo_dir=bintel-04-warehouse
+2026-07-24 00:33:32 | INFO | BI | python=3.14.6
+2026-07-24 00:33:32 | INFO | BI | os=Windows 10
+2026-07-24 00:33:32 | INFO | BI | shell=powershell
+2026-07-24 00:33:32 | INFO | BI | cwd=.
+2026-07-24 00:33:32 | INFO | BI | github_actions=False
+2026-07-24 00:33:32 | INFO | BI | ========================
+2026-07-24 00:33:32 | INFO | BI | START main()
+2026-07-24 00:33:32 | INFO | BI | ========================
+2026-07-24 00:33:32 | INFO | BI | Data warehouse: = artifacts\smart_sales.duckdb
+2026-07-24 00:33:32 | INFO | BI | Create the artifacts/ folder if it does not exist
+2026-07-24 00:33:32 | INFO | BI | Connect to DuckDB - creates the file if it does not exist
+2026-07-24 00:33:32 | INFO | BI | Connecting to DuckDB data warehouse........
+2026-07-24 00:33:32 | INFO | BI | Created conn: a DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | CALL a function to delete tables in reverse order of creation
+2026-07-24 00:33:32 | INFO | BI | START delete tables....
+2026-07-24 00:33:32 | INFO | BI | - Dropping fact_sales table if it exists
+2026-07-24 00:33:32 | INFO | BI | - Dropping dim_campaigns table if it exists
+2026-07-24 00:33:32 | INFO | BI | - Dropping dim_stores table if it exists
+2026-07-24 00:33:32 | INFO | BI | - Dropping dim_products table if it exists
+2026-07-24 00:33:32 | INFO | BI | - Dropping dim_customers table if it exists
+2026-07-24 00:33:32 | INFO | BI |   All tables deleted.
+2026-07-24 00:33:32 | INFO | BI | CALL a function to create dim_customers........
+2026-07-24 00:33:32 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | START create dim_customers
+2026-07-24 00:33:32 | INFO | BI | dim_customers created.
+2026-07-24 00:33:32 | INFO | BI | CALL a function to create dim_products........
+2026-07-24 00:33:32 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | START create dim_products
+2026-07-24 00:33:32 | INFO | BI | dim_products created.
+2026-07-24 00:33:32 | INFO | BI | CALL a function to create dim_stores........
+2026-07-24 00:33:32 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | START create dim_stores
+2026-07-24 00:33:32 | INFO | BI | Drop existing dim_stores table.
+2026-07-24 00:33:32 | INFO | BI | Create dim_stores table.
+2026-07-24 00:33:32 | INFO | BI | dim_stores created.
+2026-07-24 00:33:32 | INFO | BI | CALL a function to create dim_campaigns........
+2026-07-24 00:33:32 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | START create dim_campaigns
+2026-07-24 00:33:32 | INFO | BI | Drop existing dim_campaigns table.
+2026-07-24 00:33:32 | INFO | BI | Create dim_campaigns table.
+2026-07-24 00:33:32 | INFO | BI | dim_campaigns created.
+2026-07-24 00:33:32 | INFO | BI | CALL a function to create fact_sales........
+2026-07-24 00:33:32 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | START create fact_sales
+2026-07-24 00:33:32 | INFO | BI | Drop existing fact_sales table.
+2026-07-24 00:33:32 | INFO | BI | Create fact_sales table.
+2026-07-24 00:33:32 | INFO | BI | fact_sales created.
+2026-07-24 00:33:32 | INFO | BI | CALL a function to verify the schema........
+2026-07-24 00:33:32 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | START verify schema
+2026-07-24 00:33:32 | INFO | BI | Tables in warehouse: ['dim_campaigns', 'dim_customers', 'dim_products', 'dim_stores', 'fact_sales']
+2026-07-24 00:33:32 | INFO | BI | CALL a function to verify row counts........
+2026-07-24 00:33:32 | INFO | BI | PASS IN conn: the DuckDB connection object
+2026-07-24 00:33:32 | INFO | BI | START verify row counts....
+2026-07-24 00:33:32 | INFO | BI | Checking row count for dim_customers
+2026-07-24 00:33:32 | INFO | BI |   dim_customers: 0 rows
+2026-07-24 00:33:32 | INFO | BI | Checking row count for dim_products
+2026-07-24 00:33:32 | INFO | BI |   dim_products: 0 rows
+2026-07-24 00:33:32 | INFO | BI | Checking row count for dim_stores
+2026-07-24 00:33:32 | INFO | BI |   dim_stores: 0 rows
+2026-07-24 00:33:32 | INFO | BI | Checking row count for dim_campaigns
+2026-07-24 00:33:32 | INFO | BI |   dim_campaigns: 0 rows
+2026-07-24 00:33:32 | INFO | BI | Checking row count for fact_sales
+2026-07-24 00:33:32 | INFO | BI |   fact_sales: 0 rows
+2026-07-24 00:33:32 | INFO | BI | Workflow 1-CREATE DW complete
+2026-07-24 00:33:32 | INFO | BI | ========================
+2026-07-24 00:33:32 | INFO | BI | Executed successfully!
+2026-07-24 00:33:32 | INFO | BI | ========================
