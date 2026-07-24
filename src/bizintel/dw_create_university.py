@@ -12,7 +12,7 @@ to load data from:
     data/raw/university_records.csv
 
 
-Author: Your Name
+Author: Ralph Massaquoi
 Date: 2026-07
 
 Development:
@@ -68,6 +68,7 @@ from bizintel.utils_logger import LOG, log_header
 DW_FILE: Final[Path] = Path(
     "artifacts/university_records.duckdb"
 )
+
 # ============================================================
 # Section 2. Create Dimension Tables
 # ============================================================
@@ -166,6 +167,7 @@ def create_dim_courses(conn: duckdb.DuckDBPyConnection) -> None:
     """)
 
     LOG.info("dim_courses created.")
+
 # ------------------------------------------------------------
 # Create dim_instructors
 # ------------------------------------------------------------
@@ -246,7 +248,16 @@ def create_dim_semesters(conn: duckdb.DuckDBPyConnection) -> None:
     LOG.info("CREATE dim_semesters table")
 
     conn.execute("""
-        CREATE TABLE dim_semesters (# ============================================================
+        CREATE TABLE dim_semesters (
+            SemesterID INTEGER PRIMARY KEY,
+            Semester VARCHAR,
+            Year INTEGER
+        )
+    """)
+
+    LOG.info("dim_semesters created.")
+
+# ============================================================
 # Section 3. Create Fact Table
 # ============================================================
 
@@ -312,65 +323,6 @@ def create_fact_enrollments(conn: duckdb.DuckDBPyConnection) -> None:
     """)
 
     LOG.info("fact_enrollments created.")
-# ============================================================
-# Section 4. Delete Tables
-# ============================================================
-
-
-def delete_tables(conn: duckdb.DuckDBPyConnection) -> None:
-    """Delete all warehouse tables.
-
-    WHY:
-        Drops tables in reverse dependency order.
-        Fact tables are removed before dimensions
-        because they contain foreign keys.
-
-    Args:
-        conn:
-            Active DuckDB connection.
-
-    Returns:
-        None
-    """
-
-    LOG.info("START delete tables....")
-
-    LOG.info("DROP fact_enrollments")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS fact_enrollments
-    """)
-
-
-    LOG.info("DROP dim_semesters")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_semesters
-    """)
-
-
-    LOG.info("DROP dim_instructors")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_instructors
-    """)
-
-
-    LOG.info("DROP dim_courses")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_courses
-    """)
-
-
-    LOG.info("DROP dim_students")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_students
-    """)
-
-
-    LOG.info("All tables deleted.")
 
 # ============================================================
 # Section 4. Delete Tables
@@ -465,6 +417,7 @@ def verify_schema(conn: duckdb.DuckDBPyConnection) -> None:
     LOG.info(
         f"Tables in warehouse: {[table[0] for table in tables]}"
     )
+
 # ============================================================
 # Section 6. Main Function
 # ============================================================
