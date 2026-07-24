@@ -758,3 +758,24 @@
 2026-07-24 00:33:32 | INFO | BI | ========================
 2026-07-24 00:33:32 | INFO | BI | Executed successfully!
 2026-07-24 00:33:32 | INFO | BI | ========================
+2026-07-24 00:58:37 | INFO | BI | === RUN START ===
+2026-07-24 00:58:37 | INFO | BI | project=University BI
+2026-07-24 00:58:37 | INFO | BI | repo_dir=bintel-04-warehouse
+2026-07-24 00:58:37 | INFO | BI | python=3.14.6
+2026-07-24 00:58:37 | INFO | BI | os=Windows 10
+2026-07-24 00:58:37 | INFO | BI | shell=powershell
+2026-07-24 00:58:37 | INFO | BI | cwd=.
+2026-07-24 00:58:37 | INFO | BI | github_actions=False
+2026-07-24 00:58:37 | INFO | BI | Warehouse: = artifacts\university_dw.duckdb
+2026-07-24 00:58:37 | INFO | BI | Deleting existing tables...
+2026-07-24 00:58:37 | INFO | BI | Creating dim_students...
+2026-07-24 00:58:37 | INFO | BI | dim_students created.
+2026-07-24 00:58:37 | INFO | BI | Creating dim_courses...
+2026-07-24 00:58:37 | INFO | BI | dim_courses created.
+2026-07-24 00:58:37 | INFO | BI | Creating dim_instructors...
+2026-07-24 00:58:37 | INFO | BI | dim_instructors created.
+2026-07-24 00:58:37 | INFO | BI | Creating fact_enrollments...
+2026-07-24 00:58:37 | INFO | BI | fact_enrollments created.
+2026-07-24 00:58:37 | INFO | BI | Warehouse Tables:
+2026-07-24 00:58:37 | INFO | BI | ['dim_courses', 'dim_instructors', 'dim_students', 'fact_enrollments']
+2026-07-24 00:58:37 | INFO | BI | University data warehouse created successfully.
