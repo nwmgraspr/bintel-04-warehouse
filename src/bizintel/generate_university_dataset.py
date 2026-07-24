@@ -42,11 +42,11 @@ uv run python -m bizintel.generate_university_dataset
 # Import libraries
 # ==========================================================
 
-from pathlib import Path
-from typing import Final
 import csv
 import random
 from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Final
 
 # ==========================================================
 # CONSTANTS
