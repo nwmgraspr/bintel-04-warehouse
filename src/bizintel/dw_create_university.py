@@ -8,8 +8,6 @@ University Records dataset.
 Dataset:
     data/raw/university_records.csv
 
-<<<<<<< HEAD
-
 Author: Ralph Massaquoi
 Date: 2026-07
 
@@ -35,10 +33,6 @@ Process:
 
 Dataset Source:
     data/raw/university_records.csv
-
-
-=======
->>>>>>> 0ac4b34 (Create university data warehouse)
 Output:
     artifacts/university_records.duckdb
 
@@ -59,20 +53,15 @@ from bizintel.utils_logger import LOG, log_header
 # Constants
 # --------------------------------------------------------------------
 
-<<<<<<< HEAD
 # DuckDB warehouse file
 
-DW_FILE: Final[Path] = Path(
-    "artifacts/university_records.duckdb"
-)
+DW_FILE: Final[Path] = Path("artifacts/university_records.duckdb")
 
 # ============================================================
 # Section 2. Create Dimension Tables
 # ============================================================
-=======
-DW_FILE: Final[Path] = Path("artifacts/university_records.duckdb")
->>>>>>> 0ac4b34 (Create university data warehouse)
 
+DW_FILE: Final[Path] = Path("artifacts/university_records.duckdb")
 
 # --------------------------------------------------------------------
 # Students Dimension
@@ -121,17 +110,14 @@ def create_dim_courses(conn: duckdb.DuckDBPyConnection) -> None:
 
     LOG.info("dim_courses created.")
 
-<<<<<<< HEAD
+
 # ------------------------------------------------------------
 # Create dim_instructors
 # ------------------------------------------------------------
-=======
-
 # --------------------------------------------------------------------
 # Instructors Dimension
 # --------------------------------------------------------------------
 
->>>>>>> 0ac4b34 (Create university data warehouse)
 
 def create_dim_instructors(conn: duckdb.DuckDBPyConnection) -> None:
     """Create the instructors dimension table."""
@@ -157,29 +143,28 @@ def create_dim_instructors(conn: duckdb.DuckDBPyConnection) -> None:
 def create_dim_semesters(conn: duckdb.DuckDBPyConnection) -> None:
     """Create the semesters dimension table."""
 
-    LOG.info("Creating dim_semesters...")
+    LOG.info("START create semesters dimension table....")
 
-    conn.execute("DROP TABLE IF EXISTS dim_semesters")
+    # Drop the table in case it already exists
+    conn.execute(
+        """
+        DROP TABLE IF EXISTS dim_semesters
+        """
+    )
 
-    conn.execute("""
+    # Create the table
+    conn.execute(
+        """
         CREATE TABLE dim_semesters (
             SemesterID INTEGER PRIMARY KEY,
             Semester VARCHAR,
             Year INTEGER
         )
-    """)
+        """
+    )
 
     LOG.info("dim_semesters created.")
 
-    conn.execute("""
-        CREATE TABLE dim_semesters (
-            SemesterID INTEGER PRIMARY KEY,
-            Semester VARCHAR,
-            Year INTEGER
-        )
-    """)
-
-    LOG.info("dim_semesters created.")
 
 # ============================================================
 # Section 3. Create Fact Table
@@ -189,6 +174,7 @@ def create_dim_semesters(conn: duckdb.DuckDBPyConnection) -> None:
 # --------------------------------------------------------------------
 # Enrollment Fact Table
 # --------------------------------------------------------------------
+
 
 def create_fact_enrollments(conn: duckdb.DuckDBPyConnection) -> None:
     """Create the enrollment fact table."""
@@ -222,77 +208,10 @@ def create_fact_enrollments(conn: duckdb.DuckDBPyConnection) -> None:
 
     LOG.info("fact_enrollments created.")
 
-<<<<<<< HEAD
+
 # ============================================================
 # Section 4. Delete Tables
 # ============================================================
-
-
-def delete_tables(conn: duckdb.DuckDBPyConnection) -> None:
-    """Delete all warehouse tables.
-
-    WHY:
-        Drops tables in reverse dependency order.
-        Fact tables are removed before dimensions
-        because they contain foreign keys.
-
-    Args:
-        conn:
-            Active DuckDB connection.
-
-    Returns:
-        None
-    """
-
-    LOG.info("START delete tables....")
-
-    LOG.info("DROP fact_enrollments")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS fact_enrollments
-    """)
-
-
-    LOG.info("DROP dim_semesters")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_semesters
-    """)
-
-
-    LOG.info("DROP dim_instructors")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_instructors
-    """)
-
-
-    LOG.info("DROP dim_courses")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_courses
-    """)
-
-
-    LOG.info("DROP dim_students")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_students
-    """)
-
-
-    LOG.info("All tables deleted.")
-
-
-
-# ============================================================
-# Section 5. Verify Schema
-# ============================================================
-=======
-
-# --------------------------------------------------------------------
-# Delete Existing Tables
-# --------------------------------------------------------------------
 
 
 def delete_tables(conn: duckdb.DuckDBPyConnection) -> None:
@@ -312,7 +231,6 @@ def delete_tables(conn: duckdb.DuckDBPyConnection) -> None:
 # --------------------------------------------------------------------
 # Verify Schema
 # --------------------------------------------------------------------
->>>>>>> 0ac4b34 (Create university data warehouse)
 
 
 def verify_schema(conn: duckdb.DuckDBPyConnection) -> None:
@@ -325,24 +243,13 @@ def verify_schema(conn: duckdb.DuckDBPyConnection) -> None:
     LOG.info(f"Tables in warehouse: {[table[0] for table in tables]}")
 
 
-<<<<<<< HEAD
-    tables = conn.execute(
-        "SHOW TABLES"
-    ).fetchall()
-
-
-    LOG.info(
-        f"Tables in warehouse: {[table[0] for table in tables]}"
-    )
-
 # ============================================================
 # Section 6. Main Function
 # ============================================================
-=======
+
 # --------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------
->>>>>>> 0ac4b34 (Create university data warehouse)
 
 
 def main() -> None:
