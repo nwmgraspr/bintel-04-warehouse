@@ -1,16 +1,14 @@
-"""dw_create_university.py - custom project.
+"""dw_create_university.py
 
-Creates a University Records star schema data warehouse using DuckDB.
+Create a University Records star schema data warehouse using DuckDB.
 
-This project combines SQL and Python - two key skills for BI development.
-It demonstrates recreating an empty star schema data warehouse.
+This project is based on the dw_create_case.py example but uses a custom
+University Records dataset.
 
-After calling this file, run:
-    etl_university.py
-
-to load data from:
+Dataset:
     data/raw/university_records.csv
 
+<<<<<<< HEAD
 
 Author: Ralph Massaquoi
 Date: 2026-07
@@ -39,30 +37,29 @@ Dataset Source:
     data/raw/university_records.csv
 
 
+=======
+>>>>>>> 0ac4b34 (Create university data warehouse)
 Output:
     artifacts/university_records.duckdb
 
-
-Run from project root:
+Run:
 
     uv run python -m bizintel.dw_create_university
 """
 
-
-# ============================================================
-# Section 1. Imports and Constants
-# ============================================================
-
-
 from pathlib import Path
 from typing import Final
 
+from datafun_toolkit.logger import log_path
 import duckdb
 
-from datafun_toolkit.logger import log_path
 from bizintel.utils_logger import LOG, log_header
 
+# --------------------------------------------------------------------
+# Constants
+# --------------------------------------------------------------------
 
+<<<<<<< HEAD
 # DuckDB warehouse file
 
 DW_FILE: Final[Path] = Path(
@@ -72,42 +69,22 @@ DW_FILE: Final[Path] = Path(
 # ============================================================
 # Section 2. Create Dimension Tables
 # ============================================================
+=======
+DW_FILE: Final[Path] = Path("artifacts/university_records.duckdb")
+>>>>>>> 0ac4b34 (Create university data warehouse)
 
 
-# ------------------------------------------------------------
-# Create dim_students
-# ------------------------------------------------------------
+# --------------------------------------------------------------------
+# Students Dimension
+# --------------------------------------------------------------------
+
 
 def create_dim_students(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create the students dimension table.
+    """Create the students dimension table."""
 
-    WHY:
-        The student dimension stores descriptive information
-        about university students.
+    LOG.info("Creating dim_students...")
 
-    Source columns:
-        StudentID
-        StudentName
-        Major
-        StudentEnrollmentDate
-
-    Args:
-        conn:
-            Active DuckDB connection.
-
-    Returns:
-        None
-    """
-
-    LOG.info("START create students dimension table....")
-
-    LOG.info("DROP dim_students if it already exists")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_students
-    """)
-
-    LOG.info("CREATE dim_students table")
+    conn.execute("DROP TABLE IF EXISTS dim_students")
 
     conn.execute("""
         CREATE TABLE dim_students (
@@ -121,41 +98,17 @@ def create_dim_students(conn: duckdb.DuckDBPyConnection) -> None:
     LOG.info("dim_students created.")
 
 
+# --------------------------------------------------------------------
+# Courses Dimension
+# --------------------------------------------------------------------
 
-# ------------------------------------------------------------
-# Create dim_courses
-# ------------------------------------------------------------
 
 def create_dim_courses(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create the courses dimension table.
+    """Create the courses dimension table."""
 
-    WHY:
-        The course dimension stores descriptive information
-        about university courses.
+    LOG.info("Creating dim_courses...")
 
-    Source columns:
-        CourseID
-        CourseName
-        Department
-        CreditHours
-
-    Args:
-        conn:
-            Active DuckDB connection.
-
-    Returns:
-        None
-    """
-
-    LOG.info("START create courses dimension table....")
-
-    LOG.info("DROP dim_courses if it already exists")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_courses
-    """)
-
-    LOG.info("CREATE dim_courses table")
+    conn.execute("DROP TABLE IF EXISTS dim_courses")
 
     conn.execute("""
         CREATE TABLE dim_courses (
@@ -168,37 +121,24 @@ def create_dim_courses(conn: duckdb.DuckDBPyConnection) -> None:
 
     LOG.info("dim_courses created.")
 
+<<<<<<< HEAD
 # ------------------------------------------------------------
 # Create dim_instructors
 # ------------------------------------------------------------
+=======
+
+# --------------------------------------------------------------------
+# Instructors Dimension
+# --------------------------------------------------------------------
+
+>>>>>>> 0ac4b34 (Create university data warehouse)
 
 def create_dim_instructors(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create the instructors dimension table.
+    """Create the instructors dimension table."""
 
-    WHY:
-        The instructor dimension stores instructor identifiers
-        associated with course enrollments.
+    LOG.info("Creating dim_instructors...")
 
-    Source columns:
-        InstructorID
-
-    Args:
-        conn:
-            Active DuckDB connection.
-
-    Returns:
-        None
-    """
-
-    LOG.info("START create instructors dimension table....")
-
-    LOG.info("DROP dim_instructors if it already exists")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS dim_instructors
-    """)
-
-    LOG.info("CREATE dim_instructors table")
+    conn.execute("DROP TABLE IF EXISTS dim_instructors")
 
     conn.execute("""
         CREATE TABLE dim_instructors (
@@ -209,43 +149,27 @@ def create_dim_instructors(conn: duckdb.DuckDBPyConnection) -> None:
     LOG.info("dim_instructors created.")
 
 
+# --------------------------------------------------------------------
+# Semesters Dimension
+# --------------------------------------------------------------------
 
-# ------------------------------------------------------------
-# Create dim_semesters
-# ------------------------------------------------------------
 
 def create_dim_semesters(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create the semesters dimension table.
+    """Create the semesters dimension table."""
 
-    WHY:
-        The semester dimension allows analysis by academic term.
+    LOG.info("Creating dim_semesters...")
 
-    The raw dataset contains values such as:
-        Spring 2025
-        Summer 2024
-        Fall 2024
-
-    These are separated into:
-        Semester
-        Year
-
-    Args:
-        conn:
-            Active DuckDB connection.
-
-    Returns:
-        None
-    """
-
-    LOG.info("START create semesters dimension table....")
-
-    LOG.info("DROP dim_semesters if it already exists")
+    conn.execute("DROP TABLE IF EXISTS dim_semesters")
 
     conn.execute("""
-        DROP TABLE IF EXISTS dim_semesters
+        CREATE TABLE dim_semesters (
+            SemesterID INTEGER PRIMARY KEY,
+            Semester VARCHAR,
+            Year INTEGER
+        )
     """)
 
-    LOG.info("CREATE dim_semesters table")
+    LOG.info("dim_semesters created.")
 
     conn.execute("""
         CREATE TABLE dim_semesters (
@@ -262,42 +186,16 @@ def create_dim_semesters(conn: duckdb.DuckDBPyConnection) -> None:
 # ============================================================
 
 
+# --------------------------------------------------------------------
+# Enrollment Fact Table
+# --------------------------------------------------------------------
+
 def create_fact_enrollments(conn: duckdb.DuckDBPyConnection) -> None:
-    """Create the enrollment fact table.
+    """Create the enrollment fact table."""
 
-    WHY:
-        The fact table is the center of the university
-        star schema.
+    LOG.info("Creating fact_enrollments...")
 
-        Each row represents one student enrollment
-        in one course during one semester.
-
-    Source columns:
-        EnrollmentID
-        EnrollmentDate
-        StudentID
-        CourseID
-        InstructorID
-        Semester
-        Grade
-
-    Args:
-        conn:
-            Active DuckDB connection.
-
-    Returns:
-        None
-    """
-
-    LOG.info("START create enrollments fact table....")
-
-    LOG.info("DROP fact_enrollments if it already exists")
-
-    conn.execute("""
-        DROP TABLE IF EXISTS fact_enrollments
-    """)
-
-    LOG.info("CREATE fact_enrollments table")
+    conn.execute("DROP TABLE IF EXISTS fact_enrollments")
 
     conn.execute("""
         CREATE TABLE fact_enrollments (
@@ -324,6 +222,7 @@ def create_fact_enrollments(conn: duckdb.DuckDBPyConnection) -> None:
 
     LOG.info("fact_enrollments created.")
 
+<<<<<<< HEAD
 # ============================================================
 # Section 4. Delete Tables
 # ============================================================
@@ -389,26 +288,44 @@ def delete_tables(conn: duckdb.DuckDBPyConnection) -> None:
 # ============================================================
 # Section 5. Verify Schema
 # ============================================================
+=======
+
+# --------------------------------------------------------------------
+# Delete Existing Tables
+# --------------------------------------------------------------------
+
+
+def delete_tables(conn: duckdb.DuckDBPyConnection) -> None:
+    """Delete all warehouse tables in reverse dependency order."""
+
+    LOG.info("Deleting existing warehouse tables...")
+
+    conn.execute("DROP TABLE IF EXISTS fact_enrollments")
+    conn.execute("DROP TABLE IF EXISTS dim_semesters")
+    conn.execute("DROP TABLE IF EXISTS dim_instructors")
+    conn.execute("DROP TABLE IF EXISTS dim_courses")
+    conn.execute("DROP TABLE IF EXISTS dim_students")
+
+    LOG.info("All existing tables deleted.")
+
+
+# --------------------------------------------------------------------
+# Verify Schema
+# --------------------------------------------------------------------
+>>>>>>> 0ac4b34 (Create university data warehouse)
 
 
 def verify_schema(conn: duckdb.DuckDBPyConnection) -> None:
-    """Verify warehouse tables were created.
+    """Verify warehouse tables."""
 
-    WHY:
-        Confirms that the schema creation completed
-        successfully.
+    LOG.info("Verifying warehouse schema...")
 
-    Args:
-        conn:
-            Active DuckDB connection.
+    tables = conn.execute("SHOW TABLES").fetchall()
 
-    Returns:
-        None
-    """
-
-    LOG.info("START verify warehouse schema....")
+    LOG.info(f"Tables in warehouse: {[table[0] for table in tables]}")
 
 
+<<<<<<< HEAD
     tables = conn.execute(
         "SHOW TABLES"
     ).fetchall()
@@ -421,108 +338,53 @@ def verify_schema(conn: duckdb.DuckDBPyConnection) -> None:
 # ============================================================
 # Section 6. Main Function
 # ============================================================
+=======
+# --------------------------------------------------------------------
+# Main
+# --------------------------------------------------------------------
+>>>>>>> 0ac4b34 (Create university data warehouse)
 
 
 def main() -> None:
-    """Main function to create the University Records warehouse."""
+    """Create the University Records data warehouse."""
 
-    log_header(LOG, "BI")
+    log_header(LOG, "University BI")
 
     LOG.info("========================")
-    LOG.info("START main()")
+    LOG.info("START create warehouse")
     LOG.info("========================")
 
+    log_path(LOG, "Data warehouse:", DW_FILE)
 
-    log_path(
-        LOG,
-        "Data warehouse:",
-        DW_FILE
-    )
+    # Create artifacts folder if needed
+    DW_FILE.parent.mkdir(parents=True, exist_ok=True)
 
+    LOG.info("Connecting to DuckDB warehouse...")
 
-    LOG.info(
-        "Create artifacts folder if it does not exist"
-    )
+    conn = duckdb.connect(str(DW_FILE))
 
-    DW_FILE.parent.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-
-    LOG.info(
-        "Connect to DuckDB warehouse"
-    )
-
-    conn: duckdb.DuckDBPyConnection = duckdb.connect(
-        str(DW_FILE)
-    )
-
-
-    LOG.info(
-        "Delete existing tables"
-    )
-
+    # Build warehouse
     delete_tables(conn)
 
-
-    LOG.info(
-        "Create dim_students"
-    )
-
     create_dim_students(conn)
-
-
-    LOG.info(
-        "Create dim_courses"
-    )
-
     create_dim_courses(conn)
-
-
-    LOG.info(
-        "Create dim_instructors"
-    )
-
     create_dim_instructors(conn)
-
-
-    LOG.info(
-        "Create dim_semesters"
-    )
-
     create_dim_semesters(conn)
-
-
-    LOG.info(
-        "Create fact_enrollments"
-    )
 
     create_fact_enrollments(conn)
 
-
-    LOG.info(
-        "Verify warehouse schema"
-    )
-
     verify_schema(conn)
-
 
     conn.close()
 
-
     LOG.info("========================")
-    LOG.info(
-        "University warehouse creation complete"
-    )
+    LOG.info("University warehouse created successfully.")
     LOG.info("========================")
 
 
-
-# ============================================================
-# Conditional Execution Guard
-# ============================================================
-
+# --------------------------------------------------------------------
+# Execution Guard
+# --------------------------------------------------------------------
 
 if __name__ == "__main__":
     main()
