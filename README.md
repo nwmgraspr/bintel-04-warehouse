@@ -86,10 +86,9 @@ you'll have your own GitHub project,
 and running the example module will print out:
 
 ```shell
-========================
-Executed successfully!
-========================
-```
+2026-07-27 07:21:40 | INFO | BI | ========================
+2026-07-27 07:21:40 | INFO | BI | Executed successfully!
+2026-07-27 07:21:40 | INFO | BI | ========================
 
 A new file `project.log` will appear in the root project folder.
 
@@ -179,18 +178,18 @@ click the **DuckDB left-side tab**, right-click your database and select **Detac
 ## Workflow 1. Example Output (Remove or Replace this Section after You Verify)
 
 ```shell
-| INFO | BI | START verify warehouse schema....
-| INFO | BI | SHOW TABLES returns a list of all tables in the database
-| INFO | BI | - Calling .fetchall() on the result of SHOW TABLES
-| INFO | BI | - Gets the result - we can store it in a variable named 'tables'
-| INFO | BI |   - Retrieved tables from the warehouse.
-| INFO | BI |  - tables has a tuple for each table in the warehouse
-| INFO | BI |  - the first tuple element (at the 0 index) is the table name
-| INFO | BI |   Tables in warehouse: ['dim_customers', 'dim_products', 'fact_sales']
-| INFO | BI | Workflow 1-CREATE DW complete
-| INFO | BI | ========================
-| INFO | BI | Executed successfully!
-| INFO | BI | ========================
+
+2026-07-22 19:42:23 | INFO | BI | SHOW TABLES returns a list of all tables in the database
+2026-07-22 19:42:23 | INFO | BI | - Calling .fetchall() on the result of SHOW TABLES
+2026-07-22 19:42:23 | INFO | BI | - Gets the result - we can store it in a variable named 'tables'
+2026-07-22 19:42:23 | INFO | BI |   - Retrieved tables from the warehouse.
+2026-07-22 19:42:23 | INFO | BI |  - tables has a tuple for each table in the warehouse
+2026-07-22 19:42:23 | INFO | BI |  - the first tuple element (at the 0 index) is the table name
+2026-07-22 19:42:23 | INFO | BI |   Tables in warehouse: ['dim_customers', 'dim_products', 'fact_sales']
+2026-07-22 19:42:23 | INFO | BI | Workflow 1-CREATE DW complete
+2026-07-22 19:42:23 | INFO | BI | ========================
+2026-07-22 19:42:23 | INFO | BI | Executed successfully!
+2026-07-22 19:42:23 | INFO | BI | ========================
 ```
 
 ## Workflow 2. Example Output (Remove or Replace this Section after You Verify)
