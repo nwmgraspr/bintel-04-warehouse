@@ -139,7 +139,7 @@ def create_students() -> dict:
 def create_courses() -> dict:
     """
     Create course records.
-
+    """
     Returns:
         Dictionary containing courses.
     """
@@ -186,6 +186,7 @@ def create_enrollment_date() -> str:
     """
     Create enrollment transaction date.def create_semesters() -> dict:
     """ Create semester records.
+    
 
         semesters = {}
 
