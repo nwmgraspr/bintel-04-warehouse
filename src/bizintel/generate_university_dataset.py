@@ -15,11 +15,10 @@ Run:
 """
 
 import csv
-import random
 from datetime import datetime, timedelta
 from pathlib import Path
+import random
 from typing import Final
-
 
 # ==========================================================
 # CONSTANTS
@@ -113,17 +112,15 @@ def create_date(
 
     days = (end - start).days
 
-    result = start + timedelta(
-        days=random.randint(0, days)
-    )
+    result = start + timedelta(days=random.randint(0, days))
 
     return result.strftime("%Y-%m-%d")
-
 
 
 def create_students() -> dict:
     """
     Create student records.
+        Create student records.
     """
 
     students = {}
@@ -137,7 +134,6 @@ def create_students() -> dict:
         }
 
     return students
-
 
 
 def create_courses() -> dict:
@@ -158,7 +154,6 @@ def create_courses() -> dict:
     return courses
 
 
-
 def create_instructors() -> dict:
     """
     Create instructor records.
@@ -173,7 +168,6 @@ def create_instructors() -> dict:
         }
 
     return instructors
-
 
 
 def create_semesters() -> dict:
@@ -192,7 +186,6 @@ def create_semesters() -> dict:
     return semesters
 
 
-
 def create_enrollment_date() -> str:
     """
     Create enrollment transaction date.
@@ -202,7 +195,6 @@ def create_enrollment_date() -> str:
         2024,
         2025,
     )
-
 
 
 # ==========================================================
@@ -227,58 +219,38 @@ def create_raw_records(
 
     semesters = create_semesters()
 
-
     for enrollment_id in range(
         1001,
         1001 + number_of_records,
     ):
+        student = random.choice(list(students.values()))
 
-        student = random.choice(
-            list(students.values())
-        )
+        course = random.choice(list(courses.values()))
 
-        course = random.choice(
-            list(courses.values())
-        )
+        instructor = random.choice(list(instructors.values()))
 
-        instructor = random.choice(
-            list(instructors.values())
-        )
-
-        semester = random.choice(
-            list(semesters.values())
-        )
-
+        semester = random.choice(list(semesters.values()))
 
         record = {
             "EnrollmentID": enrollment_id,
             "EnrollmentDate": create_enrollment_date(),
-
             "StudentID": student["StudentID"],
             "StudentName": student["StudentName"],
             "Major": student["Major"],
-            "StudentEnrollmentDate": student[
-                "StudentEnrollmentDate"
-            ],
-
+            "StudentEnrollmentDate": student["StudentEnrollmentDate"],
             "CourseID": course["CourseID"],
             "CourseName": course["CourseName"],
             "Department": course["Department"],
             "CreditHours": course["CreditHours"],
-
             "Semester": semester["SemesterName"],
-
             "InstructorID": instructor["InstructorID"],
             "InstructorName": instructor["InstructorName"],
-
             "Grade": random.choice(GRADES),
         }
 
         records.append(record)
 
-
     return records
-
 
 
 # ==========================================================
@@ -298,7 +270,6 @@ def write_csv(
         exist_ok=True,
     )
 
-
     headers = [
         "EnrollmentID",
         "EnrollmentDate",
@@ -316,14 +287,12 @@ def write_csv(
         "Grade",
     ]
 
-
     with open(
         OUTPUT_FILE,
         "w",
         newline="",
         encoding="utf-8",
     ) as file:
-
         writer = csv.DictWriter(
             file,
             fieldnames=headers,
@@ -333,15 +302,9 @@ def write_csv(
 
         writer.writerows(records)
 
+    print(f"Created dataset: {OUTPUT_FILE}")
 
-    print(
-        f"Created dataset: {OUTPUT_FILE}"
-    )
-
-    print(
-        f"Rows created: {len(records)}"
-    )
-
+    print(f"Rows created: {len(records)}")
 
 
 # ==========================================================
@@ -356,29 +319,19 @@ def main() -> None:
 
     print("========================")
 
-    print(
-        "START university dataset generation"
-    )
+    print("START university dataset generation")
 
     print("========================")
 
-
-    records = create_raw_records(
-        NUMBER_OF_RECORDS
-    )
-
+    records = create_raw_records(NUMBER_OF_RECORDS)
 
     write_csv(records)
 
-
     print("========================")
 
-    print(
-        "Dataset generation complete"
-    )
+    print("Dataset generation complete")
 
     print("========================")
-
 
 
 if __name__ == "__main__":

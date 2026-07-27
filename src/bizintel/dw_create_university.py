@@ -128,8 +128,9 @@ def create_dim_instructors(conn: duckdb.DuckDBPyConnection) -> None:
 
     conn.execute("""
         CREATE TABLE dim_instructors (
-            InstructorID INTEGER PRIMARY KEY
-        )
+    InstructorID INTEGER PRIMARY KEY,
+    InstructorName VARCHAR
+)
     """)
 
     LOG.info("dim_instructors created.")
