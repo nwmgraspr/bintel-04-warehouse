@@ -33,22 +33,15 @@ from typing import Final
 import duckdb
 import pandas as pd
 
-from datafun_toolkit.logger import log_path
-
 from bizintel.utils_logger import LOG, log_header
-
 
 # === CONSTANTS ===
 
 DATA_RAW: Final[Path] = Path("data/raw")
 
-UNIVERSITY_DATA: Final[Path] = (
-    DATA_RAW / "university_records.csv"
-)
+UNIVERSITY_DATA: Final[Path] = DATA_RAW / "university_records.csv"
 
-DW_FILE: Final[Path] = (
-    Path("artifacts/university_records.duckdb")
-)
+DW_FILE: Final[Path] = Path("artifacts/university_records.duckdb")
 
 
 # === Section 2. Define reusable functions ===
@@ -61,22 +54,17 @@ def verify_row_count(
 ) -> None:
     """Verify table row count."""
 
-    result = conn.execute(
-        f"SELECT COUNT(*) FROM {table}"
-    ).fetchone()
+    result = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()
 
     actual = int(result[0]) if result else 0
 
     if actual == expected:
-        LOG.info(
-            f"  PASS: {table} has {actual} rows"
-        )
+        LOG.info(f"  PASS: {table} has {actual} rows")
     else:
-        LOG.warning(
-            f"  FAIL: {table} expected {expected}, got {actual}"
-        )
+        LOG.warning(f"  FAIL: {table} expected {expected}, got {actual}")
 
 
+# === LOAD DIMENSION TABLES ===
 # === LOAD DIMENSION TABLES ===
 
 
@@ -88,19 +76,22 @@ def load_students(
 
     LOG.info("Loading students into dim_students")
 
+    conn.register(
+        "students_df",
+        df,
+    )
+
     conn.execute("""
         INSERT INTO dim_students
         SELECT
             StudentID,
             StudentName,
             Major,
-            EnrollmentYear
-        FROM df
+            StudentEnrollmentDate
+        FROM students_df
     """)
 
-    LOG.info(
-        f"  Loaded {df.shape[0]} rows into dim_students"
-    )
+    LOG.info(f"  Loaded {df.shape[0]} rows into dim_students")
 
 
 def load_courses(
@@ -111,19 +102,22 @@ def load_courses(
 
     LOG.info("Loading courses into dim_courses")
 
+    conn.register(
+        "courses_df",
+        df,
+    )
+
     conn.execute("""
         INSERT INTO dim_courses
         SELECT
             CourseID,
             CourseName,
             Department,
-            Credits
-        FROM df
+            CreditHours
+        FROM courses_df
     """)
 
-    LOG.info(
-        f"  Loaded {df.shape[0]} rows into dim_courses"
-    )
+    LOG.info(f"  Loaded {df.shape[0]} rows into dim_courses")
 
 
 def load_instructors(
@@ -132,22 +126,22 @@ def load_instructors(
 ) -> None:
     """Load instructors dimension."""
 
-    LOG.info(
-        "Loading instructors into dim_instructors"
+    LOG.info("Loading instructors into dim_instructors")
+
+    conn.register(
+        "instructors_df",
+        df,
     )
 
     conn.execute("""
         INSERT INTO dim_instructors
         SELECT
             InstructorID,
-            InstructorName,
-            Department
-        FROM df
+            InstructorName
+        FROM instructors_df
     """)
 
-    LOG.info(
-        f"  Loaded {df.shape[0]} rows into dim_instructors"
-    )
+    LOG.info(f"  Loaded {df.shape[0]} rows into dim_instructors")
 
 
 def load_semesters(
@@ -156,22 +150,23 @@ def load_semesters(
 ) -> None:
     """Load semesters dimension."""
 
-    LOG.info(
-        "Loading semesters into dim_semesters"
+    LOG.info("Loading semesters into dim_semesters")
+
+    conn.register(
+        "semesters_df",
+        df,
     )
 
     conn.execute("""
         INSERT INTO dim_semesters
         SELECT
             SemesterID,
-            SemesterName,
+            Semester,
             Year
-        FROM df
+        FROM semesters_df
     """)
 
-    LOG.info(
-        f"  Loaded {df.shape[0]} rows into dim_semesters"
-    )
+    LOG.info(f"  Loaded {df.shape[0]} rows into dim_semesters")
 
 
 # === LOAD FACT TABLE ===
@@ -183,25 +178,27 @@ def load_enrollments(
 ) -> None:
     """Load enrollment fact table."""
 
-    LOG.info(
-        "Loading enrollments into fact_enrollments"
+    LOG.info("Loading enrollments into fact_enrollments")
+
+    conn.register(
+        "enrollments_df",
+        df,
     )
 
     conn.execute("""
         INSERT INTO fact_enrollments
         SELECT
             EnrollmentID,
+            EnrollmentDate,
             StudentID,
             CourseID,
             InstructorID,
             SemesterID,
             Grade
-        FROM df
+        FROM enrollments_df
     """)
 
-    LOG.info(
-        f"  Loaded {df.shape[0]} rows into fact_enrollments"
-    )
+    LOG.info(f"  Loaded {df.shape[0]} rows into fact_enrollments")
 
 
 # === MAIN FUNCTION ===
@@ -216,90 +213,87 @@ def main() -> None:
     LOG.info("START UNIVERSITY ETL")
     LOG.info("========================")
 
-    log_path(
-        LOG,
-        "Input data:",
-        UNIVERSITY_DATA,
-    )
+    LOG.info("Reading university source data...")
 
-    log_path(
-        LOG,
-        "Data warehouse:",
-        DW_FILE,
-    )
+    df = pd.read_csv(UNIVERSITY_DATA)
 
+    LOG.info("Transforming university data...")
 
-    # Extract source data
-
-    LOG.info(
-        "Reading university source data..."
-    )
-
-    df = pd.read_csv(
-        UNIVERSITY_DATA
-    )
-
-
-    LOG.info(
-        f"Source rows: {df.shape[0]}"
-    )
-
-
-    # Transform
-
-    LOG.info(
-        "Transforming university data..."
-    )
-
-    students = (
-        df[
-            [
-                "StudentID",
-                "StudentName",
-                "Major",
-                "EnrollmentYear",
-            ]
+    students = df[
+        [
+            "StudentID",
+            "StudentName",
+            "Major",
+            "StudentEnrollmentDate",
         ]
-        .drop_duplicates()
+    ].drop_duplicates()
+
+    students["StudentEnrollmentDate"] = pd.to_datetime(
+        students["StudentEnrollmentDate"],
+        errors="coerce",
     )
 
-    courses = (
-        df[
-            [
-                "CourseID",
-                "CourseName",
-                "Department",
-                "Credits",
-            ]
+    courses = df[
+        [
+            "CourseID",
+            "CourseName",
+            "Department",
+            "CreditHours",
         ]
-        .drop_duplicates()
-    )
+    ].drop_duplicates()
 
-    instructors = (
-        df[
-            [
-                "InstructorID",
-                "InstructorName",
-                "Department",
-            ]
+    # Instructors dimension
+    instructors = df[
+        [
+            "InstructorID",
+            "InstructorName",
         ]
-        .drop_duplicates()
-    )
+    ].drop_duplicates()
 
+    # Semesters dimension
     semesters = (
         df[
             [
-                "SemesterID",
-                "SemesterName",
-                "Year",
+                "Semester",
             ]
         ]
         .drop_duplicates()
+        .reset_index(drop=True)
     )
 
-    enrollments = df[
+    semesters["SemesterID"] = semesters.index + 1
+
+    semesters["Year"] = semesters["Semester"].str.extract(r"(\d{4})").astype(int)
+
+    semesters = semesters[
+        [
+            "SemesterID",
+            "Semester",
+            "Year",
+        ]
+    ]
+
+    # Enrollment fact table
+    enrollments = df.merge(
+        semesters[
+            [
+                "Semester",
+                "SemesterID",
+            ]
+        ],
+        on="Semester",
+        how="left",
+    )
+
+    enrollments["EnrollmentDate"] = pd.to_datetime(
+        enrollments["EnrollmentDate"],
+        errors="coerce",
+    )
+
+    enrollments = enrollments[
         [
             "EnrollmentID",
+            "EnrollmentDate",
             "StudentID",
             "CourseID",
             "InstructorID",
@@ -308,44 +302,16 @@ def main() -> None:
         ]
     ]
 
-
     LOG.info("========================")
     LOG.info("ROW COUNTS BEFORE LOAD")
     LOG.info("========================")
 
-    LOG.info(
-        f"Students: {students.shape[0]}"
-    )
+    # Connect to DuckDB warehouse
 
-    LOG.info(
-        f"Courses: {courses.shape[0]}"
-    )
+    LOG.info("Connecting to DuckDB warehouse...")
 
-    LOG.info(
-        f"Instructors: {instructors.shape[0]}"
-    )
-
-    LOG.info(
-        f"Semesters: {semesters.shape[0]}"
-    )
-
-    LOG.info(
-        f"Enrollments: {enrollments.shape[0]}"
-    )
-
-
-    # Connect
-
-    LOG.info(
-        "Connecting to DuckDB warehouse..."
-    )
-
-    conn = duckdb.connect(
-        str(DW_FILE)
-    )
-
-
-    # Load dimensions first
+    conn = duckdb.connect(str(DW_FILE))
+    # Load dimension tables first
 
     load_students(
         conn,
@@ -367,20 +333,12 @@ def main() -> None:
         semesters,
     )
 
-
-    # Load fact last
+    # Load fact table last
 
     load_enrollments(
         conn,
         enrollments,
     )
-
-
-    LOG.info("========================")
-    LOG.info("ROW COUNTS AFTER LOAD")
-    LOG.info("========================")
-
-
     verify_row_count(
         conn,
         "dim_students",
@@ -411,14 +369,10 @@ def main() -> None:
         enrollments.shape[0],
     )
 
-
     conn.close()
 
-
     LOG.info("========================")
-    LOG.info(
-        "University ETL completed successfully."
-    )
+    LOG.info("University ETL completed successfully.")
     LOG.info("========================")
 
 
