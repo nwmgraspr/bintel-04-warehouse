@@ -157,7 +157,7 @@ def create_courses() -> dict:
     return courses
 
 def create_instructors() -> dict:
-    """Create instructor records."""
+    """Create instructor records.
 
     instructors = {}
 
@@ -170,7 +170,7 @@ def create_instructors() -> dict:
     return instructors
     
 def create_semesters() -> dict:
-    """ Create semester records."""
+    """ Create semester records.
 
     semesters = {}
 
@@ -185,9 +185,9 @@ def create_semesters() -> dict:
 def create_enrollment_date() -> str:
     """
     Create enrollment transaction date.def create_semesters() -> dict:
-    """ Create semester records."""
+    """ Create semester records.
 
-    semesters = {}
+        semesters = {}
 
     for semester_id, semester_name in SEMESTERS:
         semesters[semester_id] = {
@@ -197,9 +197,7 @@ def create_enrollment_date() -> str:
 
     return semesters
 
-    Returns:
-        Enrollment date.
-    """
+ 
 
     return create_date(
         2024,
