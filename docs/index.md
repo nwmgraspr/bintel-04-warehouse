@@ -21,65 +21,117 @@ to get the example projects running on your machine.
 
 ## Phase 4. Technical Modification
 
-Describe your small technical modification to the example project.
+- Describe your small technical modification to the example project.
 
-Include:
+I modified the original dw_create_case.py by creating dw_create_modification_case.py. The modification expanded the star schema by adding dim_stores and dim_camppaigns dimensions, connecting them to the fact_sales through new foreign keys. Ialso added row cound verification.
 
 - What you changed
+  
+I added two new dimension tables (dim_stores and dim_campaigns), updated fact_sales with new foreign keys, and added a verify_row_cound() function to validate the schema.
+
 - Why you chose that change
+I chose this change because I wanted to create a more realistic star schema that supports sales analysis by store and marketing campaign while improving schema validation.
+
 - How you verified that it worked
+  "uv run python -m bizintel.dw_create_modification_case"
+The log output confirmed that each dimension table and the fact table were created successfully. I also verified that "show tables" returned all five tables and that the verify_row_counts() function reported zero rows for each table, confirmaing thtat the schema was created correctly without loading data.
+
+
 - What result, output, chart, metric, or behavior confirmed the change
+I verify_schema() listed all five tables, and verify_row_counts() reported zero rows for each table, confirming the warehouse was created correctly and is ready for ETL.
 
-Compared with the example project,
-explain what is different and why the change matters.
+- Compared with the example project, what is different and why does it matter?
 
-Was it easy, or surprisingly challenging and why do you think so?
+The modified version includes two additional dimensions and more foreign key relationships. This makes the data warehouse more realistic and capable of supporting more detailed business analysis.
+
+- Was it easy or surprisingly challenging, and why?
+The table creation itself was straightforward, but integrating new dimensions, maintaining relationships, updating foreign keys, meeting logging requirements, and ensuring the project passed all checks required additional effort
+
 
 ## Phase 5. Custom Project
 
 Describe your custom data warehouse design and ETVL work.
 
+I created a custom University Records data warehouse using a DuckDB star schema and a custom ETVL pipeline
+
 ### Basis and Data
 
-Describe the prepared data you loaded into the warehouse.
+The prepared data source was:
+- `data/raw/university_records.csv`
+The file contains university enrollment records, including students, courses, instructors, semesters, and grades.
+The data was prepared as a flat source file and transformed into warehouse tables. The warehouse is stored as: artifacts/university_records.duckdb
 
-Include:
-
-- The three prepared data files and what each contains
-- Any assumptions or decisions made during preparation
-- The warehouse file location and format
 
 ### Warehouse Design
 
-Describe your star schema design.
+The warehouse uses a star schema with enrollment activity as the central fact.
 
-Include:
+Fact table:
 
-- Your fact table and its columns
-- Your dimension tables and their columns
-- Your primary and foreign key relationships
-- Why a star schema fits this data
+- `fact_enrollments`
+  - EnrollmentID
+  - EnrollmentDate
+  - StudentID
+  - CourseID
+  - InstructorID
+  - SemesterID
+  - Grade
+
+Dimension tables:
+
+- `dim_students`
+  - StudentID
+  - StudentName
+  - Major
+  - StudentEnrollmentDate
+
+- `dim_courses`
+  - CourseID
+  - CourseName
+  - Department
+  - CreditHours
+
+- `dim_instructors`
+  - InstructorID
+  - InstructorName
+
+- `dim_semesters`
+  - SemesterID
+  - Semester
+  - Year
+
+The fact table connects to the dimension tables through primary and foreign keys. A star schema fits this data because it supports easy analysis of enrollment trends by student, course, instructor, and semester.
+
 
 ### ETVL Process
 
-Describe your extract, transform, verify, and load steps.
+The ETVL process included:
 
-Include:
+**Extract**
+- Read `university_records.csv` into the ETL pipeline.
 
-- How you extracted data from the prepared CSV files
-- Any transformations applied before loading
-- How you verified the data loaded correctly
-- What the row counts confirmed
+**Transform**
+- Split the flat data into dimension and fact tables.
+- Removed duplicate dimension records.
+- Created semester keys and relationships.
+
+**Verify**
+- Confirmed that all warehouse tables were created:
+  - dim_students
+  - dim_courses
+  - dim_instructors
+  - dim_semesters
+  - fact_enrollments
+
+- Verified that the fact table loaded 100 enrollment records.
+
+**Load**
+- Loaded transformed data into the DuckDB warehouse.
+
 
 ### Summary
 
-Summarize your custom warehouse work.
+This project expanded the example warehouse by creating a new university business domain, generating custom data, designing a star schema, and building a working ETVL pipeline.
 
-Include:
+The warehouse supports business questions such as enrollment trends, course demand, instructor performance, and academic reporting. This project helped me understand how raw operational data can be transformed into a structured warehouse for analysis and decision-making.
 
-- What you implemented beyond the example
-- What the warehouse contains
-- What you learned about data warehouse design
-- What kinds of real business problems a data warehouse enables
-
-Display at least one screenshot of your populated warehouse tables.
