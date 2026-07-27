@@ -4,49 +4,22 @@ generate_university_dataset.py
 Generate a raw university enrollment dataset for a Business Intelligence
 data warehouse project.
 
-This script creates a denormalized operational dataset that will later
-be transformed into a star schema consisting of:
+Creates a denormalized operational dataset used as the source
+for an ETLV process.
 
-    • dim_students
-    • dim_courses
-    • fact_enrollments
-
-The generated dataset serves as the source for the ETLV process.
-
-Author: Your Name
-Date: 2026-07
-
-Development
-
-    This script creates realistic sample university enrollment data.
-
-    The output is written to
-
-        data/raw/university_records.csv
-
-    The generated file is later used by
-
-        prepare_university_data.py
-
-Output
-
+Output:
     data/raw/university_records.csv
 
-Terminal Command
-
-uv run python -m bizintel.generate_university_dataset
+Run:
+    uv run python -m bizintel.generate_university_dataset
 """
 
-# ==========================================================
-# SECTION 1
-# Import libraries
-# ==========================================================
-
 import csv
+import random
 from datetime import datetime, timedelta
 from pathlib import Path
-import random
 from typing import Final
+
 
 # ==========================================================
 # CONSTANTS
@@ -59,6 +32,7 @@ OUTPUT_FILE: Final = OUTPUT_DIR / "university_records.csv"
 NUMBER_OF_RECORDS: Final = 100
 
 random.seed(42)
+
 
 # ==========================================================
 # REFERENCE DATA
@@ -77,6 +51,7 @@ STUDENTS = [
     (1010, "Jack Anderson", "Computer Science"),
 ]
 
+
 COURSES = [
     (101, "Database Systems", "Computer Science", 3),
     (102, "Programming I", "Computer Science", 4),
@@ -90,6 +65,7 @@ COURSES = [
     (110, "Financial Accounting", "Accounting", 3),
 ]
 
+
 INSTRUCTORS = [
     (501, "Dr. Adams"),
     (502, "Dr. Baker"),
@@ -98,12 +74,14 @@ INSTRUCTORS = [
     (505, "Dr. Evans"),
 ]
 
+
 SEMESTERS = [
     (1, "Spring 2024"),
     (2, "Summer 2024"),
     (3, "Fall 2024"),
     (4, "Spring 2025"),
 ]
+
 
 GRADES = [
     "A",
@@ -115,13 +93,38 @@ GRADES = [
     "C",
 ]
 
+
 # ==========================================================
-# SECTION 2
-# Helper Functions
+# HELPER FUNCTIONS
 # ==========================================================
 
+
+def create_date(
+    start_year: int = 2024,
+    end_year: int = 2025,
+) -> str:
+    """
+    Create a random date.
+    """
+
+    start = datetime(start_year, 1, 1)
+
+    end = datetime(end_year, 12, 31)
+
+    days = (end - start).days
+
+    result = start + timedelta(
+        days=random.randint(0, days)
+    )
+
+    return result.strftime("%Y-%m-%d")
+
+
+
 def create_students() -> dict:
-    """ Create student records.
+    """
+    Create student records.
+    """
 
     students = {}
 
@@ -135,42 +138,48 @@ def create_students() -> dict:
 
     return students
 
+
+
 def create_courses() -> dict:
     """
     Create course records.
-
-    Returns:
-        Dictionary containing courses.
     """
 
     courses = {}
 
-    for course in COURSES:
-        courses[course[0]] = {
-            "CourseID": course[0],
-            "CourseName": course[1],
-            "Department": course[2],
-            "CreditHours": course[3],
+    for course_id, name, department, credits in COURSES:
+        courses[course_id] = {
+            "CourseID": course_id,
+            "CourseName": name,
+            "Department": department,
+            "CreditHours": credits,
         }
 
     return courses
 
 
+
 def create_instructors() -> dict:
-    """Create instructor records.
+    """
+    Create instructor records.
+    """
 
     instructors = {}
 
-    for instructor_id, instructor_name in INSTRUCTORS:
+    for instructor_id, name in INSTRUCTORS:
         instructors[instructor_id] = {
             "InstructorID": instructor_id,
-            "InstructorName": instructor_name,
+            "InstructorName": name,
         }
 
     return instructors
-    
+
+
+
 def create_semesters() -> dict:
-    """ Create semester records.
+    """
+    Create semester records.
+    """
 
     semesters = {}
 
@@ -182,23 +191,12 @@ def create_semesters() -> dict:
 
     return semesters
 
+
+
 def create_enrollment_date() -> str:
     """
-    Create enrollment transaction date.def create_semesters() -> dict:
-    """ Create semester records.
-    
-
-        semesters = {}
-
-    for semester_id, semester_name in SEMESTERS:
-        semesters[semester_id] = {
-            "SemesterID": semester_id,
-            "SemesterName": semester_name,
-        }
-
-    return semesters
-
- 
+    Create enrollment transaction date.
+    """
 
     return create_date(
         2024,
@@ -206,9 +204,9 @@ def create_enrollment_date() -> str:
     )
 
 
+
 # ==========================================================
-# SECTION 3
-# Generate Raw Enrollment Dataset
+# DATA GENERATION
 # ==========================================================
 
 
@@ -217,23 +215,6 @@ def create_raw_records(
 ) -> list[dict]:
     """
     Create raw university enrollment records.
-
-    The raw dataset is intentionally denormalized.
-    It combines student, course, and enrollment information
-    into one operational-style table.
-
-    This file will later be transformed into:
-
-        dim_students
-        dim_courses
-        fact_enrollments
-
-    Args:
-        number_of_records:
-            Number of enrollment records to create.
-
-    Returns:
-        List of raw enrollment dictionaries.
     """
 
     records = []
@@ -246,69 +227,70 @@ def create_raw_records(
 
     semesters = create_semesters()
 
+
     for enrollment_id in range(
         1001,
         1001 + number_of_records,
-    ):# Select random student
+    ):
 
-student = random.choice(
-    list(students.values())
-)
+        student = random.choice(
+            list(students.values())
+        )
 
+        course = random.choice(
+            list(courses.values())
+        )
 
-# Select random course
+        instructor = random.choice(
+            list(instructors.values())
+        )
 
-course = random.choice(
-    list(courses.values())
-)
+        semester = random.choice(
+            list(semesters.values())
+        )
 
-
-# Select random instructor
-
-instructor = random.choice(
-    list(instructors.values())
-)
-
-
-# Select random semester
-
-semester = random.choice(
-    list(semesters.values())
-)
 
         record = {
             "EnrollmentID": enrollment_id,
             "EnrollmentDate": create_enrollment_date(),
+
             "StudentID": student["StudentID"],
             "StudentName": student["StudentName"],
             "Major": student["Major"],
-            "StudentEnrollmentDate": student["StudentEnrollmentDate"],
+            "StudentEnrollmentDate": student[
+                "StudentEnrollmentDate"
+            ],
+
             "CourseID": course["CourseID"],
             "CourseName": course["CourseName"],
             "Department": course["Department"],
             "CreditHours": course["CreditHours"],
-            "Semester": random.choice(SEMESTERS),
-            "InstructorID": create_instructor_id(),
+
+            "Semester": semester["SemesterName"],
+
+            "InstructorID": instructor["InstructorID"],
+            "InstructorName": instructor["InstructorName"],
+
             "Grade": random.choice(GRADES),
         }
 
         records.append(record)
 
+
     return records
+
+
+
+# ==========================================================
+# CSV OUTPUT
+# ==========================================================
 
 
 def write_csv(
     records: list[dict],
 ) -> None:
     """
-    Write raw records to CSV.
-
-    Args:
-        records:
-            Raw enrollment records.
-
-    Returns:
-        None
+    Write records to CSV.
     """
 
     OUTPUT_DIR.mkdir(
@@ -316,7 +298,8 @@ def write_csv(
         exist_ok=True,
     )
 
-    LOG_HEADER = [
+
+    headers = [
         "EnrollmentID",
         "EnrollmentDate",
         "StudentID",
@@ -329,8 +312,10 @@ def write_csv(
         "CreditHours",
         "Semester",
         "InstructorID",
+        "InstructorName",
         "Grade",
     ]
+
 
     with open(
         OUTPUT_FILE,
@@ -338,58 +323,62 @@ def write_csv(
         newline="",
         encoding="utf-8",
     ) as file:
+
         writer = csv.DictWriter(
             file,
-            fieldnames=LOG_HEADER,
+            fieldnames=headers,
         )
 
         writer.writeheader()
 
         writer.writerows(records)
 
-    print(f"Created dataset: {OUTPUT_FILE}")
 
-    print(f"Rows created: {len(records)}")
+    print(
+        f"Created dataset: {OUTPUT_FILE}"
+    )
+
+    print(
+        f"Rows created: {len(records)}"
+    )
+
 
 
 # ==========================================================
-# SECTION 4
-# Main Function
+# MAIN
 # ==========================================================
 
 
 def main() -> None:
     """
-    Main function to generate raw university data.
-
-    Workflow:
-
-        1. Create raw enrollment records.
-        2. Create output directory.
-        3. Write records to CSV.
-        4. Display completion message.
+    Generate university dataset.
     """
 
     print("========================")
-    print("START university dataset generation")
+
+    print(
+        "START university dataset generation"
+    )
+
     print("========================")
 
-    print("Creating raw enrollment records...")
 
-    records = create_raw_records(NUMBER_OF_RECORDS)
+    records = create_raw_records(
+        NUMBER_OF_RECORDS
+    )
 
-    print("Writing CSV file...")
 
     write_csv(records)
 
-    print("========================")
-    print("Dataset generation complete")
+
     print("========================")
 
+    print(
+        "Dataset generation complete"
+    )
 
-# ==========================================================
-# Conditional Execution Guard
-# ==========================================================
+    print("========================")
+
 
 
 if __name__ == "__main__":
