@@ -135,11 +135,10 @@ def create_students() -> dict:
 
     return students
 
-
 def create_courses() -> dict:
     """
     Create course records.
-    """
+
     Returns:
         Dictionary containing courses.
     """
@@ -155,6 +154,7 @@ def create_courses() -> dict:
         }
 
     return courses
+
 
 def create_instructors() -> dict:
     """Create instructor records.
