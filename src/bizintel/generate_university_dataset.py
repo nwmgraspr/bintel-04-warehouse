@@ -121,7 +121,7 @@ GRADES = [
 # ==========================================================
 
 def create_students() -> dict:
-    """ Create student records."""
+    """ Create student records.
 
     students = {}
 
