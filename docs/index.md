@@ -26,7 +26,7 @@ to get the example projects running on your machine.
 I modified the original dw_create_case.py by creating dw_create_modification_case.py. The modification expanded the star schema by adding dim_stores and dim_camppaigns dimensions, connecting them to the fact_sales through new foreign keys. Ialso added row cound verification.
 
 - What you changed
-  
+
 I added two new dimension tables (dim_stores and dim_campaigns), updated fact_sales with new foreign keys, and added a verify_row_cound() function to validate the schema.
 
 - Why you chose that change
@@ -134,4 +134,3 @@ The ETVL process included:
 This project expanded the example warehouse by creating a new university business domain, generating custom data, designing a star schema, and building a working ETVL pipeline.
 
 The warehouse supports business questions such as enrollment trends, course demand, instructor performance, and academic reporting. This project helped me understand how raw operational data can be transformed into a structured warehouse for analysis and decision-making.
-

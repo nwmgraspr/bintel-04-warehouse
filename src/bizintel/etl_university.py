@@ -16,14 +16,9 @@ from pathlib import Path
 import duckdb
 import pandas as pd
 
+RAW_FILE = Path("data/raw/university_records.csv")
 
-RAW_FILE = Path(
-    "data/raw/university_records.csv"
-)
-
-DW_FILE = Path(
-    "artifacts/university_records.duckdb"
-)
+DW_FILE = Path("artifacts/university_records.duckdb")
 
 
 def extract() -> pd.DataFrame:
@@ -35,61 +30,46 @@ def extract() -> pd.DataFrame:
 def transform_students(df: pd.DataFrame) -> pd.DataFrame:
     """Create student dimension."""
 
-    return (
-        df[
-            [
-                "StudentID",
-                "StudentName",
-                "Major",
-                "StudentEnrollmentDate",
-            ]
+    return df[
+        [
+            "StudentID",
+            "StudentName",
+            "Major",
+            "StudentEnrollmentDate",
         ]
-        .drop_duplicates()
-    )
+    ].drop_duplicates()
 
 
 def transform_courses(df: pd.DataFrame) -> pd.DataFrame:
     """Create course dimension."""
 
-    return (
-        df[
-            [
-                "CourseID",
-                "CourseName",
-                "Department",
-                "CreditHours",
-            ]
+    return df[
+        [
+            "CourseID",
+            "CourseName",
+            "Department",
+            "CreditHours",
         ]
-        .drop_duplicates()
-    )
+    ].drop_duplicates()
 
 
 def transform_instructors(df: pd.DataFrame) -> pd.DataFrame:
     """Create instructor dimension."""
 
-    return (
-        df[
-            [
-                "InstructorID",
-                "InstructorName",
-            ]
+    return df[
+        [
+            "InstructorID",
+            "InstructorName",
         ]
-        .drop_duplicates()
-    )
+    ].drop_duplicates()
 
 
 def transform_semesters(df: pd.DataFrame) -> pd.DataFrame:
     """Create semester dimension."""
 
-    semesters = (
-        df[["Semester"]]
-        .drop_duplicates()
-        .reset_index(drop=True)
-    )
+    semesters = df[["Semester"]].drop_duplicates().reset_index(drop=True)
 
-    semesters["SemesterID"] = (
-        semesters.index + 1
-    )
+    semesters["SemesterID"] = semesters.index + 1
 
     semesters["Year"] = 2024
 
@@ -150,9 +130,7 @@ def load(
 ):
     """Load warehouse tables."""
 
-    conn = duckdb.connect(
-        str(DW_FILE)
-    )
+    conn = duckdb.connect(str(DW_FILE))
 
     students.to_sql(
         "dim_students",
