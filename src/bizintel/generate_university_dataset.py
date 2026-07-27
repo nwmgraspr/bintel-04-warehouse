@@ -64,69 +64,17 @@ random.seed(42)
 # REFERENCE DATA
 # ==========================================================
 
-FIRST_NAMES = [
-    "Alice",
-    "Bob",
-    "Carol",
-    "David",
-    "Emma",
-    "Frank",
-    "Grace",
-    "Henry",
-    "Isabella",
-    "Jack",
-    "Karen",
-    "Liam",
-    "Mia",
-    "Noah",
-    "Olivia",
-    "Paul",
-    "Quinn",
-    "Ryan",
-    "Sophia",
-    "Thomas",
-    "Uma",
-    "Victoria",
-    "William",
-    "Xavier",
-    "Yara",
-    "Zach",
-]
-
-LAST_NAMES = [
-    "Johnson",
-    "Smith",
-    "Brown",
-    "Davis",
-    "Wilson",
-    "Taylor",
-    "Anderson",
-    "Thomas",
-    "Moore",
-    "Martin",
-    "Clark",
-    "Lewis",
-    "Walker",
-    "Young",
-    "Allen",
-    "King",
-    "Scott",
-    "Green",
-    "Baker",
-    "Adams",
-]
-
-MAJORS = [
-    "Computer Science",
-    "Business",
-    "Mathematics",
-    "Biology",
-    "Chemistry",
-    "Engineering",
-    "Accounting",
-    "Economics",
-    "Nursing",
-    "Psychology",
+STUDENTS = [
+    (1001, "Alice Johnson", "Computer Science"),
+    (1002, "Bob Smith", "Business"),
+    (1003, "Carol Davis", "Mathematics"),
+    (1004, "David Wilson", "Engineering"),
+    (1005, "Emma Thomas", "Biology"),
+    (1006, "Frank Garcia", "Accounting"),
+    (1007, "Grace Miller", "Economics"),
+    (1008, "Henry Walker", "Nursing"),
+    (1009, "Isabella Moore", "Psychology"),
+    (1010, "Jack Anderson", "Computer Science"),
 ]
 
 COURSES = [
@@ -140,101 +88,48 @@ COURSES = [
     (108, "Organic Chemistry", "Chemistry", 4),
     (109, "Engineering Mechanics", "Engineering", 4),
     (110, "Financial Accounting", "Accounting", 3),
-    (111, "Macroeconomics", "Economics", 3),
-    (112, "Clinical Nursing", "Nursing", 4),
-    (113, "Developmental Psychology", "Psychology", 3),
 ]
 
-SEMESTERS = ["Spring 2024", "Summer 2024", "Fall 2024", "Spring 2025"]
+INSTRUCTORS = [
+    (501, "Dr. Adams"),
+    (502, "Dr. Baker"),
+    (503, "Dr. Carter"),
+    (504, "Dr. Davis"),
+    (505, "Dr. Evans"),
+]
 
-GRADES = ["A", "A-", "B+", "B", "B-", "C+", "C"]
+SEMESTERS = [
+    (1, "Spring 2024"),
+    (2, "Summer 2024"),
+    (3, "Fall 2024"),
+    (4, "Spring 2025"),
+]
+
+GRADES = [
+    "A",
+    "A-",
+    "B+",
+    "B",
+    "B-",
+    "C+",
+    "C",
+]
+
 # ==========================================================
 # SECTION 2
 # Helper Functions
 # ==========================================================
 
-
-def create_student_name() -> str:
-    """
-    Create a realistic student name.
-
-    Returns:
-        A randomly generated full name.
-    """
-
-    first = random.choice(FIRST_NAMES)
-
-    last = random.choice(LAST_NAMES)
-
-    return f"{first} {last}"
-
-
-def create_date(
-    start_year: int = 2021,
-    end_year: int = 2024,
-) -> str:
-    """
-    Generate a random date.
-
-    Args:
-        start_year:
-            Beginning year range.
-
-        end_year:
-            Ending year range.
-
-    Returns:
-        Date formatted as YYYY-MM-DD.
-    """
-
-    start_date = datetime(
-        start_year,
-        1,
-        1,
-    )
-
-    end_date = datetime(
-        end_year,
-        12,
-        31,
-    )
-
-    days_between = (end_date - start_date).days
-
-    random_days = random.randint(
-        0,
-        days_between,
-    )
-
-    result = start_date + timedelta(days=random_days)
-
-    return result.strftime("%Y-%m-%d")
-
-
-def create_students(
-    number_of_students: int,
-) -> dict:
-    """
-    Create student records.
-
-    Args:
-        number_of_students:
-            Number of students to generate.
-
-    Returns:
-        Dictionary of student records.
-    """
+def create_students() -> dict:
+    """ Create student records."""
 
     students = {}
 
-    for student_id in range(
-        1,
-        number_of_students + 1,
-    ):
+    for student_id, name, major in STUDENTS:
         students[student_id] = {
             "StudentID": student_id,
-            "StudentName": create_student_name(),
-            "Major": random.choice(MAJORS),
+            "StudentName": name,
+            "Major": major,
             "StudentEnrollmentDate": create_date(),
         }
 
@@ -261,24 +156,46 @@ def create_courses() -> dict:
 
     return courses
 
+def create_instructors() -> dict:
+    """Create instructor records."""
 
-def create_instructor_id() -> int:
-    """
-    Generate instructor identifier.
+    instructors = {}
 
-    Returns:
-        Random instructor ID.
-    """
+    for instructor_id, instructor_name in INSTRUCTORS:
+        instructors[instructor_id] = {
+            "InstructorID": instructor_id,
+            "InstructorName": instructor_name,
+        }
 
-    return random.randint(
-        500,
-        599,
-    )
+    return instructors
+    
+def create_semesters() -> dict:
+    """ Create semester records."""
 
+    semesters = {}
+
+    for semester_id, semester_name in SEMESTERS:
+        semesters[semester_id] = {
+            "SemesterID": semester_id,
+            "SemesterName": semester_name,
+        }
+
+    return semesters
 
 def create_enrollment_date() -> str:
     """
-    Create enrollment transaction date.
+    Create enrollment transaction date.def create_semesters() -> dict:
+    """ Create semester records."""
+
+    semesters = {}
+
+    for semester_id, semester_name in SEMESTERS:
+        semesters[semester_id] = {
+            "SemesterID": semester_id,
+            "SemesterName": semester_name,
+        }
+
+    return semesters
 
     Returns:
         Enrollment date.
@@ -322,29 +239,43 @@ def create_raw_records(
 
     records = []
 
-    # Create reusable student records
-
-    students = create_students(50)
-
-    # Create reusable course records
+    students = create_students()
 
     courses = create_courses()
+
+    instructors = create_instructors()
+
+    semesters = create_semesters()
 
     for enrollment_id in range(
         1001,
         1001 + number_of_records,
-    ):
-        # Select random student
+    ):# Select random student
 
-        student_id = random.choice(list(students.keys()))
+student = random.choice(
+    list(students.values())
+)
 
-        student = students[student_id]
 
-        # Select random course
+# Select random course
 
-        course_id = random.choice(list(courses.keys()))
+course = random.choice(
+    list(courses.values())
+)
 
-        course = courses[course_id]
+
+# Select random instructor
+
+instructor = random.choice(
+    list(instructors.values())
+)
+
+
+# Select random semester
+
+semester = random.choice(
+    list(semesters.values())
+)
 
         record = {
             "EnrollmentID": enrollment_id,
