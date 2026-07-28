@@ -221,52 +221,65 @@ click the **DuckDB left-side tab**, right-click your database and select **Detac
 
 ```shell
 
-2026-07-22 19:42:23 | INFO | BI | SHOW TABLES returns a list of all tables in the database
-2026-07-22 19:42:23 | INFO | BI | - Calling .fetchall() on the result of SHOW TABLES
-2026-07-22 19:42:23 | INFO | BI | - Gets the result - we can store it in a variable named 'tables'
-2026-07-22 19:42:23 | INFO | BI |   - Retrieved tables from the warehouse.
-2026-07-22 19:42:23 | INFO | BI |  - tables has a tuple for each table in the warehouse
-2026-07-22 19:42:23 | INFO | BI |  - the first tuple element (at the 0 index) is the table name
-2026-07-22 19:42:23 | INFO | BI |   Tables in warehouse: ['dim_customers', 'dim_products', 'fact_sales']
-2026-07-22 19:42:23 | INFO | BI | Workflow 1-CREATE DW complete
-2026-07-22 19:42:23 | INFO | BI | ========================
-2026-07-22 19:42:23 | INFO | BI | Executed successfully!
-2026-07-22 19:42:23 | INFO | BI | ========================
+========================
+START university dataset generation
+========================
+Created dataset: data\raw\university_records.csv
+Rows created: 100
+========================
+Dataset generation complete
+========================
 ```
 
 ## Workflow 2. Example Output (Remove or Replace this Section after You Verify)
 
 ```shell
-| INFO | BI | ========================
-| INFO | BI | ROW COUNTS AFTER LOAD
-| INFO | BI | ========================
-| INFO | BI | CALL a function to verify row counts........
-| INFO | BI |   PASS: dim_customers has 200 rows
-| INFO | BI |   PASS: dim_products has 100 rows
-| INFO | BI |   PASS: fact_sales has 2392 rows
-| INFO | BI | Workflow 2-ETL complete
-| INFO | BI | ========================
-| INFO | BI | Executed successfully!
+2026-07-28 14:40:13 | INFO | BI | ========================
+2026-07-28 14:40:13 | INFO | BI | START create warehouse
+2026-07-28 14:40:13 | INFO | BI | ========================
+2026-07-28 14:40:13 | INFO | BI | Data warehouse: = artifacts\university_records.duckdb
+2026-07-28 14:40:13 | INFO | BI | Connecting to DuckDB warehouse...
+2026-07-28 14:40:13 | INFO | BI | Deleting existing warehouse tables...
+2026-07-28 14:40:13 | INFO | BI | All existing tables deleted.
+2026-07-28 14:40:13 | INFO | BI | Creating dim_students...
+2026-07-28 14:40:13 | INFO | BI | dim_students created.
+2026-07-28 14:40:13 | INFO | BI | Creating dim_courses...
+2026-07-28 14:40:13 | INFO | BI | dim_courses created.
+2026-07-28 14:40:13 | INFO | BI | Creating dim_instructors...
+2026-07-28 14:40:13 | INFO | BI | dim_instructors created.
+2026-07-28 14:40:13 | INFO | BI | START create semesters dimension table....
+2026-07-28 14:40:13 | INFO | BI | dim_semesters created.
+2026-07-28 14:40:13 | INFO | BI | Creating fact_enrollments...
+2026-07-28 14:40:13 | INFO | BI | fact_enrollments created.
+2026-07-28 14:40:13 | INFO | BI | Verifying warehouse schema...
+2026-07-28 14:40:13 | INFO | BI | Tables in warehouse: ['dim_courses', 'dim_instructors', 'dim_semesters', 'dim_students', 'fact_enrollments']
+2026-07-28 14:40:13 | INFO | BI | ========================
+2026-07-28 14:40:13 | INFO | BI | University warehouse created successfully.
+2026-07-28 14:40:13 | INFO | BI | ========================
+```
+## Workflow 2. Example Output (Remove or Replace this Section after You Verify)
+
+```shell
+=== fact_enrollments ===
+    EnrollmentID EnrollmentDate  StudentID  CourseID  InstructorID  SemesterID Grade
+0           1001     2024-01-31       1002       110           504           1     A
+1           1002     2025-07-28       1004       104           505           1    A-
+2           1003     2025-08-26       1009       107           502           2    B+
+3           1004     2024-10-11       1001       103           504           3    A-
+4           1005     2025-01-24       1004       106           501           1     A
+..           ...            ...        ...       ...           ...         ...   ...
+95          1096     2025-10-14       1008       108           503           4    B+
+96          1097     2025-03-26       1009       108           502           3     A
+97          1098     2024-11-23       1005       104           503           3    B-
+98          1099     2025-01-27       1002       103           502           4    C+
+99          1100     2025-02-21       1003       104           501           2    B+
+
+[100 rows x 7 columns]
+2026-07-28 14:43:51 | INFO | BI | ========================
+2026-07-28 14:43:51 | INFO | BI | University ETL completed successfully.
+2026-07-28 14:43:51 | INFO | BI | ========================
 ```
 
-## Findings and Visuals
-
-Take screenshots of your charts and provide them here with a discussion.
-In Markdown, display a figure using:
-an exclamation mark immediately followed by square brackets containing a useful caption
-immediately followed by parentheses containing the relative path to your figure.
-
-In your custom project:
-
-- your figures and narrative should reflect your work
-- this `README.md` should include your commands, process, and visuals
-- `docs/index.md` should include your narrative
-
-Replace these placeholders with screenshots from your own project run:
-
-![Total Sales by Region](./docs/images/Figure_1.png)
-
-![Total Sales by Product Category](./docs/images/Figure_2.png)
 
 ## Project Documentation
 

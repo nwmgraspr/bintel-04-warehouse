@@ -1253,3 +1253,68 @@
 2026-07-27 10:36:00 | INFO | BI | ========================
 2026-07-27 10:36:00 | INFO | BI | Executed successfully!
 2026-07-27 10:36:00 | INFO | BI | ========================
+2026-07-28 14:40:13 | INFO | BI | === RUN START ===
+2026-07-28 14:40:13 | INFO | BI | project=University BI
+2026-07-28 14:40:13 | INFO | BI | repo_dir=bintel-04-warehouse
+2026-07-28 14:40:13 | INFO | BI | python=3.14.6
+2026-07-28 14:40:13 | INFO | BI | os=Windows 10
+2026-07-28 14:40:13 | INFO | BI | shell=powershell
+2026-07-28 14:40:13 | INFO | BI | cwd=.
+2026-07-28 14:40:13 | INFO | BI | github_actions=False
+2026-07-28 14:40:13 | INFO | BI | ========================
+2026-07-28 14:40:13 | INFO | BI | START create warehouse
+2026-07-28 14:40:13 | INFO | BI | ========================
+2026-07-28 14:40:13 | INFO | BI | Data warehouse: = artifacts\university_records.duckdb
+2026-07-28 14:40:13 | INFO | BI | Connecting to DuckDB warehouse...
+2026-07-28 14:40:13 | INFO | BI | Deleting existing warehouse tables...
+2026-07-28 14:40:13 | INFO | BI | All existing tables deleted.
+2026-07-28 14:40:13 | INFO | BI | Creating dim_students...
+2026-07-28 14:40:13 | INFO | BI | dim_students created.
+2026-07-28 14:40:13 | INFO | BI | Creating dim_courses...
+2026-07-28 14:40:13 | INFO | BI | dim_courses created.
+2026-07-28 14:40:13 | INFO | BI | Creating dim_instructors...
+2026-07-28 14:40:13 | INFO | BI | dim_instructors created.
+2026-07-28 14:40:13 | INFO | BI | START create semesters dimension table....
+2026-07-28 14:40:13 | INFO | BI | dim_semesters created.
+2026-07-28 14:40:13 | INFO | BI | Creating fact_enrollments...
+2026-07-28 14:40:13 | INFO | BI | fact_enrollments created.
+2026-07-28 14:40:13 | INFO | BI | Verifying warehouse schema...
+2026-07-28 14:40:13 | INFO | BI | Tables in warehouse: ['dim_courses', 'dim_instructors', 'dim_semesters', 'dim_students', 'fact_enrollments']
+2026-07-28 14:40:13 | INFO | BI | ========================
+2026-07-28 14:40:13 | INFO | BI | University warehouse created successfully.
+2026-07-28 14:40:13 | INFO | BI | ========================
+2026-07-28 14:43:51 | INFO | BI | === RUN START ===
+2026-07-28 14:43:51 | INFO | BI | project=BI
+2026-07-28 14:43:51 | INFO | BI | repo_dir=bintel-04-warehouse
+2026-07-28 14:43:51 | INFO | BI | python=3.14.6
+2026-07-28 14:43:51 | INFO | BI | os=Windows 10
+2026-07-28 14:43:51 | INFO | BI | shell=powershell
+2026-07-28 14:43:51 | INFO | BI | cwd=.
+2026-07-28 14:43:51 | INFO | BI | github_actions=False
+2026-07-28 14:43:51 | INFO | BI | ========================
+2026-07-28 14:43:51 | INFO | BI | START UNIVERSITY ETL
+2026-07-28 14:43:51 | INFO | BI | ========================
+2026-07-28 14:43:51 | INFO | BI | Reading university source data...
+2026-07-28 14:43:51 | INFO | BI | Transforming university data...
+2026-07-28 14:43:51 | INFO | BI | ========================
+2026-07-28 14:43:51 | INFO | BI | ROW COUNTS BEFORE LOAD
+2026-07-28 14:43:51 | INFO | BI | ========================
+2026-07-28 14:43:51 | INFO | BI | Connecting to DuckDB warehouse...
+2026-07-28 14:43:51 | INFO | BI | Loading students into dim_students
+2026-07-28 14:43:51 | INFO | BI |   Loaded 10 rows into dim_students
+2026-07-28 14:43:51 | INFO | BI | Loading courses into dim_courses
+2026-07-28 14:43:51 | INFO | BI |   Loaded 10 rows into dim_courses
+2026-07-28 14:43:51 | INFO | BI | Loading instructors into dim_instructors
+2026-07-28 14:43:51 | INFO | BI |   Loaded 5 rows into dim_instructors
+2026-07-28 14:43:51 | INFO | BI | Loading semesters into dim_semesters
+2026-07-28 14:43:51 | INFO | BI |   Loaded 4 rows into dim_semesters
+2026-07-28 14:43:51 | INFO | BI | Loading enrollments into fact_enrollments
+2026-07-28 14:43:51 | INFO | BI |   Loaded 100 rows into fact_enrollments
+2026-07-28 14:43:51 | INFO | BI |   PASS: dim_students has 10 rows
+2026-07-28 14:43:51 | INFO | BI |   PASS: dim_courses has 10 rows
+2026-07-28 14:43:51 | INFO | BI |   PASS: dim_instructors has 5 rows
+2026-07-28 14:43:51 | INFO | BI |   PASS: dim_semesters has 4 rows
+2026-07-28 14:43:51 | INFO | BI |   PASS: fact_enrollments has 100 rows
+2026-07-28 14:43:51 | INFO | BI | ========================
+2026-07-28 14:43:51 | INFO | BI | University ETL completed successfully.
+2026-07-28 14:43:51 | INFO | BI | ========================
