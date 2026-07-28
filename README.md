@@ -151,6 +151,48 @@ git add -A
 git commit -m "update"
 git push -u origin main
 ```
+# Custom Run
+Run the project scripts in the following order.
+### 1. Generate University Dataset
+Creates the raw university records source file:
+```powershell
+uv run python -m bizintel.generate_university_dataset
+```
+Output:
+```
+data/raw/university_records.csv
+```
+---
+### 2. Create Data Warehouse
+Creates the DuckDB warehouse and required tables:
+```powershell
+uv run python -m bizintel.dw_create_university
+```
+Output:
+```
+artifacts/university_records.duckdb
+```
+Runs the Extract, Transform, Verify, and Load process:
+```powershell
+uv run python -m bizintel.etl_university
+```
+The pipeline:
+- Reads `university_records.csv`
+- Creates dimension and fact tables
+- Loads data into DuckDB
+- Verifies successful loading
+### Restore / Reset
+Remove generated files:
+```powershell
+git restore artifacts/university_records.duckdb
+git restore artifacts/ project.log ```
+```
+After resetting, rebuild the project by running the three scripts again in order:
+```powershell
+uv run python -m bizintel.generate_university_dataset
+uv run python -m bizintel.dw_create_university
+uv run python -m bizintel.etl_university
+```
 
 </details>
 
