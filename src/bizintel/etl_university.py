@@ -369,6 +369,21 @@ def main() -> None:
         enrollments.shape[0],
     )
 
+    print("\n=== dim_students ===")
+    print(conn.sql("SELECT * FROM dim_students").df())
+
+    print("\n=== dim_courses ===")
+    print(conn.sql("SELECT * FROM dim_courses").df())
+
+    print("\n=== dim_instructors ===")
+    print(conn.sql("SELECT * FROM dim_instructors").df())
+
+    print("\n=== dim_semesters ===")
+    print(conn.sql("SELECT * FROM dim_semesters").df())
+
+    print("\n=== fact_enrollments ===")
+    print(conn.sql("SELECT * FROM fact_enrollments").df())
+
     conn.close()
 
     LOG.info("========================")
